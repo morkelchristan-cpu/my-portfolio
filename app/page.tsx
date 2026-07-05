@@ -99,47 +99,36 @@ export default function Home() {
       </section>
 
       {/* Page 2: Professional Introduction */}
-<section id="about" className="min-h-screen flex flex-col items-center justify-center p-10 gap-8">
+<section id="about" className="min-h-screen flex flex-col items-center justify-center p-10 gap-6">
   
-  {/* Block 1: Header */}
-  <motion.div 
-    initial={{ opacity: 0, y: 30 }} 
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6 }}
-    className="text-center"
-  >
-    <h2 className="text-5xl font-bold mb-4">Hi, I'm Chris.</h2>
-    <p className="text-xl opacity-70 italic">Full-Stack Developer & Community Architect</p>
+  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-6">
+    <h2 className="text-5xl font-bold mb-2">Hi, I'm Chris.</h2>
+    <p className="text-xl opacity-70 italic">Discord Developer & Community Architect</p>
   </motion.div>
 
-  {/* Block 2: Development Philosophy */}
-  <motion.div 
-    initial={{ opacity: 0, scale: 0.9 }} 
-    whileInView={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.6, delay: 0.2 }}
-    whileHover={{ scale: 1.02 }}
-    className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 max-w-2xl shadow-2xl w-full"
-  >
-    <h3 className="text-2xl font-bold mb-4 text-blue-300">Why I Develop</h3>
-    <p className="text-lg opacity-80 leading-relaxed">
-      I started in 2024 to solve complex community management issues. I build automation tools for LEO roleplay servers because I believe high-performance code makes for better, more immersive communities.
-    </p>
-  </motion.div>
-
-  {/* Block 3: Growth & Learning */}
-  <motion.div 
-    initial={{ opacity: 0, scale: 0.9 }} 
-    whileInView={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.6, delay: 0.4 }}
-    whileHover={{ scale: 1.02 }}
-    className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 max-w-2xl shadow-2xl w-full"
-  >
-    <h3 className="text-2xl font-bold mb-4 text-purple-300">Continuous Growth</h3>
-    <p className="text-lg opacity-80 leading-relaxed">
-      I am always learning. Currently, I am deepening my knowledge in Next.js and backend integrations to ensure my tools—like ZHPD Nexus—remain industry-leading, efficient, and scalable.
-    </p>
-  </motion.div>
-
+  {/* 6-Block Grid */}
+  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
+    {[
+      { title: "Why Discord Dev", text: "I specialize in creating robust bot ecosystems that streamline management for high-traffic LEO communities.", color: "text-blue-300" },
+      { title: "My Journey", text: "Starting in 2024, I set out to replace manual administrative tasks with automated, high-performance logic.", color: "text-green-300" },
+      { title: "Technical Stack", text: "I utilize Node.js for backend automation, seamlessly integrating with web portals like ZHPD Nexus.", color: "text-yellow-300" },
+      { title: "Continuous Growth", text: "I am constantly evolving my codebase, refining ticketing systems, and optimizing BOLO monitoring logic.", color: "text-purple-300" },
+      { title: "Design Philosophy", text: "I believe that community tools should be as aesthetically pleasing as they are functional.", color: "text-pink-300" },
+      { title: "Collaborations", text: "I enjoy building tools that solve real-world problems for friends and community leaders alike.", color: "text-indigo-300" }
+    ].map((block, i) => (
+      <motion.div 
+        key={i}
+        initial={{ opacity: 0, scale: 0.9 }} 
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ delay: i * 0.1 }}
+        whileHover={{ scale: 1.05 }}
+        className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 shadow-2xl"
+      >
+        <h3 className={`text-xl font-bold mb-3 ${block.color}`}>{block.title}</h3>
+        <p className="text-sm opacity-80 leading-relaxed">{block.text}</p>
+      </motion.div>
+    ))}
+  </div>
 </section>
     </main>
   );
