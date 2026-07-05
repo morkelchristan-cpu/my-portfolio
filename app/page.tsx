@@ -3,14 +3,13 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const techStack = [
-  { name: 'Discord Dev', icon: '/developer icon.png' },
+  { name: 'Discord Dev', icon: '/dev.png' },
   { name: 'VsCode.js', icon: '/vscode.png' },
   { name: 'Next.js', icon: '/nextjs.png' }
 ];
 
-const PHRASES = ["building cool stuff on the web.", "discord.", "17 y/o from Canada"];
+const PHRASES = ["building cool discord bots on the web.", "I'm a discord developer.", "18 y/o from Africa.", "I love creating new innovative ideas.", "I specialize in Discord bot development.", "God is soo good!"];
 
-// Moved outside and defined as a standard function to prevent "accessed before declared" issues
 function runTypeEffect(
   phraseIndex: number, 
   charIndex: number, 
@@ -79,8 +78,7 @@ export default function Home() {
               <div className="flex justify-center gap-3 bg-white/5 p-2 rounded-full mb-4 w-fit mx-auto border border-white/5">
                 {techStack.map((t) => (
                   <div key={t.name} className="relative group cursor-pointer">
-                    <img src="/developer icon.png" alt={t.name} className="w-5 h-5 object-contain opacity-80 group-hover:opacity-100 transition" />
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-black/80 px-2 py-1 rounded text-xs whitespace-nowrap border border-white/20 pointer-events-none">{t.name}</div>
+                    <img src={t.icon} alt={t.name} className="w-5 h-5 object-contain opacity-80 group-hover:opacity-100 transition" />
                   </div>
                 ))}
               </div>
@@ -110,6 +108,15 @@ export default function Home() {
               ))}
             </div>
           </section>
+
+          <footer className="fixed bottom-0 w-full p-6 flex justify-center gap-6 z-40">
+            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+              <img src="/discord.png" alt="Discord" className="w-8 h-8 opacity-70 hover:opacity-100" />
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+              <img src="/github.png" alt="GitHub" className="w-8 h-8 opacity-70 hover:opacity-100" />
+            </a>
+          </footer>
         </>
       )}
     </main>
