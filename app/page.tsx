@@ -99,44 +99,48 @@ export default function Home() {
       </section>
 
       {/* Page 2: Professional Introduction */}
-      <section id="about" className="h-screen flex items-center justify-center p-6">
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }} 
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-10 max-w-3xl shadow-2xl"
-        >
-          <div className="mb-8 text-center">
-            <h2 className="text-4xl font-bold mb-2">Hi, I'm Chris.</h2>
-            <p className="text-xl opacity-70 italic">Full-Stack Developer & Community Architect</p>
-          </div>
+<section id="about" className="min-h-screen flex flex-col items-center justify-center p-10 gap-8">
+  
+  {/* Block 1: Header */}
+  <motion.div 
+    initial={{ opacity: 0, y: 30 }} 
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="text-center"
+  >
+    <h2 className="text-5xl font-bold mb-4">Hi, I'm Chris.</h2>
+    <p className="text-xl opacity-70 italic">Full-Stack Developer & Community Architect</p>
+  </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <motion.div whileHover={{ scale: 1.02 }} className="bg-white/5 p-6 rounded-2xl border border-white/5">
-              <h3 className="text-xl font-bold mb-2 text-blue-300">Why I Develop</h3>
-              <p className="text-sm opacity-80 leading-relaxed">
-                I started in 2024 to solve complex community management issues. I build automation tools for LEO roleplay servers because I believe high-performance code makes for better communities.
-              </p>
-            </motion.div>
+  {/* Block 2: Development Philosophy */}
+  <motion.div 
+    initial={{ opacity: 0, scale: 0.9 }} 
+    whileInView={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.6, delay: 0.2 }}
+    whileHover={{ scale: 1.02 }}
+    className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 max-w-2xl shadow-2xl w-full"
+  >
+    <h3 className="text-2xl font-bold mb-4 text-blue-300">Why I Develop</h3>
+    <p className="text-lg opacity-80 leading-relaxed">
+      I started in 2024 to solve complex community management issues. I build automation tools for LEO roleplay servers because I believe high-performance code makes for better, more immersive communities.
+    </p>
+  </motion.div>
 
-            <motion.div whileHover={{ scale: 1.02 }} className="bg-white/5 p-6 rounded-2xl border border-white/5">
-              <h3 className="text-xl font-bold mb-2 text-purple-300">Continuous Growth</h3>
-              <p className="text-sm opacity-80 leading-relaxed">
-                I am always learning. Currently, I am deepening my knowledge in Next.js and backend integrations to ensure my tools—like ZHPD Nexus—remain industry-leading.
-              </p>
-            </motion.div>
-          </div>
+  {/* Block 3: Growth & Learning */}
+  <motion.div 
+    initial={{ opacity: 0, scale: 0.9 }} 
+    whileInView={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.6, delay: 0.4 }}
+    whileHover={{ scale: 1.02 }}
+    className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-8 max-w-2xl shadow-2xl w-full"
+  >
+    <h3 className="text-2xl font-bold mb-4 text-purple-300">Continuous Growth</h3>
+    <p className="text-lg opacity-80 leading-relaxed">
+      I am always learning. Currently, I am deepening my knowledge in Next.js and backend integrations to ensure my tools—like ZHPD Nexus—remain industry-leading, efficient, and scalable.
+    </p>
+  </motion.div>
 
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-8 text-center text-sm opacity-60"
-          >
-            Feel free to reach out via Discord or GitHub if you'd like to collaborate or chat.
-          </motion.p>
-        </motion.div>
-      </section>
+</section>
     </main>
   );
 }
