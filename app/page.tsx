@@ -13,7 +13,7 @@ export default function Home() {
   const [text, setText] = useState('');
   const audioRef = useRef<HTMLAudioElement>(null);
   
-  const phrases = ["building cool discord bots on the web.", "discord.", "17 y/o from Africa.", "learning new things every day.", "creating inovative solutions for discord communities.", "God is good."];
+  const phrases = ["building cool stuff on the web.", "discord.", "17 y/o from Canada"];
   
   useEffect(() => {
     if (!entered) return;
@@ -64,7 +64,7 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* Hero Section */}
+      {/* Page 1: Original Layout */}
       <section className="h-screen flex items-center justify-center">
         {entered && (
           <motion.div 
@@ -77,7 +77,6 @@ export default function Home() {
             <img src="/pfp.jpg" alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10" />
             <h1 className="text-4xl font-bold mb-2">Chris.io</h1>
             
-            {/* Icons with Tooltips */}
             <div className="flex justify-center gap-3 bg-white/5 p-2 rounded-full mb-4 w-fit mx-auto border border-white/5">
               {techStack.map((t) => (
                 <div key={t.name} className="relative group cursor-custom-pointer">
@@ -99,19 +98,43 @@ export default function Home() {
         )}
       </section>
 
-      {/* About Section */}
-      <section id="about" className="h-screen flex items-center justify-center p-10">
+      {/* Page 2: Professional Introduction */}
+      <section id="about" className="h-screen flex items-center justify-center p-6">
         <motion.div 
-          initial={{ opacity: 0 }} 
-          whileInView={{ opacity: 1 }}
-          whileHover={{ scale: 1.01 }}
-          className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 max-w-lg text-center shadow-2xl"
+          initial={{ opacity: 0, y: 50 }} 
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem] p-10 max-w-3xl shadow-2xl"
         >
-          <h2 className="text-3xl font-bold mb-4">Introduction</h2>
-          <p className="text-lg leading-relaxed opacity-90">
-            I started my journey in Discord development back in 2024 because I wanted to simplify community management and bring automation to LEO roleplay servers. 
-            My passion lies in creating efficient, user-friendly tools that handle everything from roster management to ticketing.
-          </p>
+          <div className="mb-8 text-center">
+            <h2 className="text-4xl font-bold mb-2">Hi, I'm Chris.</h2>
+            <p className="text-xl opacity-70 italic">Full-Stack Developer & Community Architect</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <motion.div whileHover={{ scale: 1.02 }} className="bg-white/5 p-6 rounded-2xl border border-white/5">
+              <h3 className="text-xl font-bold mb-2 text-blue-300">Why I Develop</h3>
+              <p className="text-sm opacity-80 leading-relaxed">
+                I started in 2024 to solve complex community management issues. I build automation tools for LEO roleplay servers because I believe high-performance code makes for better communities.
+              </p>
+            </motion.div>
+
+            <motion.div whileHover={{ scale: 1.02 }} className="bg-white/5 p-6 rounded-2xl border border-white/5">
+              <h3 className="text-xl font-bold mb-2 text-purple-300">Continuous Growth</h3>
+              <p className="text-sm opacity-80 leading-relaxed">
+                I am always learning. Currently, I am deepening my knowledge in Next.js and backend integrations to ensure my tools—like ZHPD Nexus—remain industry-leading.
+              </p>
+            </motion.div>
+          </div>
+
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="mt-8 text-center text-sm opacity-60"
+          >
+            Feel free to reach out via Discord or GitHub if you'd like to collaborate or chat.
+          </motion.p>
         </motion.div>
       </section>
     </main>
