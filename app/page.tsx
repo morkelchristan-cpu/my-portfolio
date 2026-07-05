@@ -8,7 +8,7 @@ const techStack = [
   { name: 'Next.js', icon: '/nextjs.png' }
 ];
 
-const PHRASES = ["building cool discord bots on the web.", "I'm a discord developer.", "18 y/o from Africa.", "I love creating new innovative ideas.", "I specialize in Discord bot development.", "God is soo good!"];
+const PHRASES = ["building cool stuff on the web.", "discord.", "17 y/o from Canada"];
 
 function runTypeEffect(
   phraseIndex: number, 
@@ -49,7 +49,7 @@ export default function Home() {
   };
 
   return (
-    <main className="h-screen w-full overflow-y-auto text-white cursor-custom scroll-smooth">
+    <main className="h-screen w-full overflow-y-auto text-white scroll-smooth cursor-custom">
       <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10" src="/Background1.mp4" />
       <audio ref={audioRef} loop src="/music.mp3" preload="auto" />
 
@@ -79,6 +79,9 @@ export default function Home() {
                 {techStack.map((t) => (
                   <div key={t.name} className="relative group cursor-pointer">
                     <img src={t.icon} alt={t.name} className="w-5 h-5 object-contain opacity-80 group-hover:opacity-100 transition" />
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-black/80 px-3 py-1 rounded text-xs whitespace-nowrap border border-white/20 pointer-events-none">
+                      {t.name}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -86,26 +89,21 @@ export default function Home() {
             </motion.div>
           </section>
 
-          <section id="about" className="min-h-screen flex flex-col items-center justify-center p-10 gap-6">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-6">
-              <h2 className="text-5xl font-bold mb-2">About Me</h2>
-              <p className="text-xl opacity-70 italic">Discord Developer & Community Architect</p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
-              {[
-                { title: "Why Discord Dev", text: "I specialize in creating robust bot ecosystems that streamline management for high-traffic LEO communities.", color: "text-blue-300" },
-                { title: "My Journey", text: "Starting in 2024, I set out to replace manual administrative tasks with automated, high-performance logic.", color: "text-green-300" },
-                { title: "Technical Stack", text: "I utilize Node.js for backend automation, seamlessly integrating with web portals like ZHPD Nexus.", color: "text-yellow-300" },
-                { title: "Continuous Growth", text: "I am constantly evolving my codebase, refining ticketing systems, and optimizing BOLO monitoring logic.", color: "text-purple-300" },
-                { title: "Design Philosophy", text: "I believe that community tools should be as aesthetically pleasing as they are functional.", color: "text-pink-300" },
-                { title: "Collaborations", text: "I enjoy building tools that solve real-world problems for friends and community leaders alike.", color: "text-indigo-300" }
-              ].map((block, i) => (
-                <motion.div key={i} whileInView={{ opacity: 1, scale: 1 }} initial={{ opacity: 0, scale: 0.9 }} transition={{ delay: i * 0.1 }} whileHover={{ scale: 1.05 }} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 shadow-2xl">
-                  <h3 className={`text-xl font-bold mb-3 ${block.color}`}>{block.title}</h3>
-                  <p className="text-sm opacity-80 leading-relaxed">{block.text}</p>
-                </motion.div>
-              ))}
+          <section id="about" className="min-h-screen p-20 flex flex-col items-center">
+            <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-6xl font-bold mb-16">The Developer Profile</motion.h2>
+            <div className="grid md:grid-cols-2 gap-12 max-w-7xl">
+              <motion.div initial={{ x: -50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} className="bg-white/5 p-8 rounded-3xl backdrop-blur-lg border border-white/10">
+                <h3 className="text-3xl font-bold mb-6 text-blue-300">My Philosophy</h3>
+                <p className="leading-relaxed opacity-80">I architect ecosystems. From optimizing BOLO logging in FiveM to full-stack portals, my goal is to shave seconds off admin workflows.</p>
+              </motion.div>
+              <motion.div initial={{ x: 50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} className="bg-white/5 p-8 rounded-3xl backdrop-blur-lg border border-white/10">
+                <h3 className="text-3xl font-bold mb-6 text-green-300">Current Focus</h3>
+                <ul className="space-y-4 opacity-80">
+                  <li>🚀 <b>ZHPD Nexus</b>: Next-gen police operations portal.</li>
+                  <li>🤖 <b>Bot Infrastructure</b>: High-uptime Node.js automation.</li>
+                  <li>🎨 <b>3D Assets</b>: Environment design in Blender.</li>
+                </ul>
+              </motion.div>
             </div>
           </section>
 
