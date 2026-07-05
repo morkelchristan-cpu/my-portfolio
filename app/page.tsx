@@ -14,7 +14,6 @@ const MUSIC_TRACKS = [
   { name: "Dakati", path: "/dakati.mp3" }
 ];
 
-// Defined outside to fix "cannot find runTypeEffect"
 function runTypeEffect(
   phraseIndex: number,
   charIndex: number,
@@ -25,7 +24,6 @@ function runTypeEffect(
   setCharIndex: React.Dispatch<React.SetStateAction<number>>
 ) {
   const currentPhrase = PHRASES[phraseIndex];
-  
   if (isDeleting) {
     setText(currentPhrase.substring(0, charIndex - 1));
     setCharIndex(charIndex - 1);
@@ -57,7 +55,6 @@ export default function Home() {
     setTrackIndex(Math.floor(Math.random() * MUSIC_TRACKS.length));
   }, []);
 
-  // Fixed cascading renders by using functional state updates
   useEffect(() => {
     if (!entered) return;
     const timer = setTimeout(() => {
@@ -66,15 +63,20 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [entered, phraseIndex, charIndex, isDeleting]);
 
+  // Updated skip: changes track and immediately calls play()
+  const skipTrack = () => {
+    const nextIndex = (trackIndex + 1) % MUSIC_TRACKS.length;
+    setTrackIndex(nextIndex);
+    setIsPlaying(true);
+    setTimeout(() => {
+      audioRef.current?.play().catch(console.error);
+    }, 50);
+  };
+
   const togglePlay = () => {
     if (isPlaying) audioRef.current?.pause();
     else audioRef.current?.play();
     setIsPlaying(!isPlaying);
-  };
-
-  const skipTrack = () => {
-    setTrackIndex((prev) => (prev + 1) % MUSIC_TRACKS.length);
-    setIsPlaying(true);
   };
 
   return (
@@ -120,9 +122,27 @@ export default function Home() {
           </section>
 
           <section id="about" className="min-h-screen p-20 flex flex-col items-center">
-            <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-6xl font-bold mb-16">Hi, I'm Chris.</motion.h2>
+            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-16">
+              <h2 className="text-6xl font-bold mb-4">Hi, I'm Chris.</h2>
+              <p className="text-2xl opacity-70 italic">Architecting the future of community management and web experiences.</p>
+            </motion.div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl">
-              {/* Add your 9 grid items here as previously configured */}
+              {[
+                { title: "Who I Am", text: "I am an 18-year-old developer from Africa with a deep passion for building robust digital ecosystems.", color: "text-blue-300" },
+                { title: "The Mission", text: "To replace manual, tedious administrative tasks with high-performance, automated logic.", color: "text-green-300" },
+                { title: "Discord Expertise", text: "I specialize in advanced bot development using Node.js to manage high-traffic LEO communities.", color: "text-yellow-300" },
+                { title: "Web Architecture", text: "I build responsive, glass-morphism themed web portals like ZHPD Nexus using Next.js and Supabase.", color: "text-purple-300" },
+                { title: "Design Language", text: "My aesthetic is defined by cloud themes, abstract glass effects, and clean, blue-toned palettes.", color: "text-pink-300" },
+                { title: "3D Manipulation", text: "I am actively mastering Blender, focusing on car modeling and complex environment mesh manipulation.", color: "text-indigo-300" },
+                { title: "Problem Solving", text: "Whether it's BOLO monitoring or ticket system cooldowns, I focus on data-driven solutions.", color: "text-teal-300" },
+                { title: "Collaborative Spirit", text: "I thrive in team environments, streaming and building tools alongside my community friends.", color: "text-orange-300" },
+                { title: "Future Vision", text: "I'm constantly pushing the limits of my codebase to optimize performance and user experience.", color: "text-red-300" }
+              ].map((block, i) => (
+                <motion.div key={i} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} whileHover={{ scale: 1.05 }} transition={{ delay: i * 0.05 }} className="bg-white/5 p-8 rounded-3xl backdrop-blur-lg border border-white/10">
+                  <h3 className={`text-2xl font-bold mb-4 ${block.color}`}>{block.title}</h3>
+                  <p className="leading-relaxed opacity-80">{block.text}</p>
+                </motion.div>
+              ))}
             </div>
           </section>
         </>
