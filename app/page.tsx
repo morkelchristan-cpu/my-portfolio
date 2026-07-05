@@ -6,15 +6,12 @@ import { motion } from 'framer-motion';
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
-  const DISCORD_ID = '590893917587898369'; // Replace with your 18-digit ID
+  const DISCORD_ID = 'YOUR_DISCORD_ID_HERE'; // Replace with your 18-digit ID
   const { data } = useSWR(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`, fetcher, { refreshInterval: 5000 });
   const [started, setStarted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const status = data?.data?.discord_status || 'offline';
-  const avatarUrl = data?.data?.discord_user?.avatar 
-    ? `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${data.data.discord_user.avatar}.png?size=256`
-    : `https://cdn.discordapp.com/embed/avatars/0.png`;
 
   const startExperience = () => {
     setStarted(true);
@@ -34,7 +31,8 @@ export default function Home() {
           className="bg-white/20 backdrop-blur-md border border-white/30 rounded-3xl p-10 text-center w-80 shadow-2xl"
         >
           <div className="relative inline-block mb-4">
-            <img src={avatarUrl} alt="PFP" className="w-24 h-24 rounded-full border-4 border-white/20" />
+            {/* Using local pfp.jpg from public folder */}
+            <img src="/pfp.jpg" alt="Profile" className="w-24 h-24 rounded-full border-4 border-white/20" />
             <div className={`absolute bottom-1 right-1 w-5 h-5 rounded-full border-4 border-black ${
               status === 'online' ? 'bg-green-500' : status === 'idle' ? 'bg-yellow-500' : status === 'dnd' ? 'bg-red-500' : 'bg-gray-500'
             }`} />
