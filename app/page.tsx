@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const techStack = [
-  { name: 'Discord Dev', icon: '/developer icon.png' },
+  { name: 'Discord Dev', icon: '/dev.png' },
   { name: 'VsCode.js', icon: '/vscode.png' },
   { name: 'Next.jr', icon: '/nextjs.png' }
 ];
