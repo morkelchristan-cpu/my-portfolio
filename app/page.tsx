@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const techStack = [
   { name: 'Discord Dev', icon: '/dev.png' },
   { name: 'VsCode.js', icon: '/vscode.png' },
-  { name: 'Next.jr', icon: '/nextjs.png' }
+  { name: 'Next.js', icon: '/nextjs.png' }
 ];
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
   const [text, setText] = useState('');
   const audioRef = useRef<HTMLAudioElement>(null);
   
-  const phrases = ["building cool stuff on the web.", "discord.", "17 y/o from Canada"];
+  const phrases = ["building cool discord bots on the web.", "discord.", "17 y/o from Africa.", "learning new things every day.", "creating inovative solutions for discord communities.", "God is good."];
   
   useEffect(() => {
     if (!entered) return;
@@ -39,10 +39,12 @@ export default function Home() {
 
   const enterSite = () => {
     setEntered(true);
-    if (audioRef.current) {
-      audioRef.current.currentTime = 7.008;
-      audioRef.current.play().catch(e => console.error(e));
-    }
+    setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.currentTime = 7.008;
+        audioRef.current.play().catch(e => console.error("Playback failed:", e));
+      }
+    }, 100);
   };
 
   return (
@@ -52,42 +54,57 @@ export default function Home() {
 
       <AnimatePresence>
         {!entered && (
-          <motion.div exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xl cursor-custom-pointer" onClick={enterSite}>
+          <motion.div 
+            exit={{ opacity: 0 }} 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xl cursor-custom-pointer" 
+            onClick={enterSite}
+          >
             <h1 className="text-4xl tracking-widest font-light">click to enter</h1>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Page 1 */}
+      {/* Hero Section */}
       <section className="h-screen flex items-center justify-center">
         {entered && (
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.95 }} 
+            animate={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 text-center w-80 shadow-2xl"
           >
             <img src="/pfp.jpg" alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10" />
             <h1 className="text-4xl font-bold mb-2">Chris.io</h1>
+            
+            {/* Icons with Tooltips */}
             <div className="flex justify-center gap-3 bg-white/5 p-2 rounded-full mb-4 w-fit mx-auto border border-white/5">
               {techStack.map((t) => (
                 <div key={t.name} className="relative group cursor-custom-pointer">
-                  <img src={t.icon} alt={t.name} className="w-5 h-5 object-contain opacity-80 group-hover:opacity-100" />
+                  <img src={t.icon} alt={t.name} className="w-5 h-5 object-contain opacity-80 group-hover:opacity-100 transition" />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-black/80 px-2 py-1 rounded text-xs whitespace-nowrap border border-white/20 pointer-events-none">
+                    {t.name}
+                  </div>
                 </div>
               ))}
             </div>
+
             <p className="text-lg h-8 mb-6 opacity-90">{text}<span className="animate-pulse">|</span></p>
+
             <div className="flex justify-center gap-6 text-2xl">
-              <a href="https://discord.com/users/590893917587898369" target="_blank" className="hover:opacity-70 transition"><img src="/discord.png" className="w-6 h-6" /></a>
-              <a href="https://github.com/morkelchristan-cpu" target="_blank" className="hover:opacity-70 transition"><img src="/github.png" className="w-6 h-6" /></a>
+              <a href="https://discord.com/users/590893917587898369" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition"><img src="/discord.png" className="w-6 h-6" /></a>
+              <a href="https://github.com/morkelchristan-cpu" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 transition"><img src="/github.png" className="w-6 h-6" /></a>
             </div>
           </motion.div>
         )}
       </section>
 
-      {/* Page 2: About/Introduction */}
+      {/* About Section */}
       <section id="about" className="h-screen flex items-center justify-center p-10">
         <motion.div 
-          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0 }} 
+          whileInView={{ opacity: 1 }}
+          whileHover={{ scale: 1.01 }}
           className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 max-w-lg text-center shadow-2xl"
         >
           <h2 className="text-3xl font-bold mb-4">Introduction</h2>
