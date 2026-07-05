@@ -1,5 +1,3 @@
-Here is your polished README.md template, packed with emojis to make it pop! 🚀
-
 🌌 Chris.io Portfolio Template
 A high-performance, interactive portfolio built with Next.js, Framer Motion, and Tailwind CSS. Designed for developers who want to showcase their skills, social presence, and community projects with a clean, immersive "glass-morphism" aesthetic. ✨
 
