@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const techStack = [
@@ -11,6 +11,7 @@ const techStack = [
 export default function Home() {
   const [entered, setEntered] = useState(false);
   const [text, setText] = useState('');
+  const audioRef = useRef<HTMLAudioElement>(null);
   const fullText = "Full-stack Developer";
 
   // Typing Animation
@@ -26,9 +27,21 @@ export default function Home() {
     }
   }, [entered]);
 
+  const enterSite = () => {
+    setEntered(true);
+    // Reliable audio trigger
+    setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.currentTime = 7.008;
+        audioRef.current.play().catch(e => console.error("Playback failed:", e));
+      }
+    }, 100);
+  };
+
   return (
     <main className="h-screen w-full overflow-y-auto text-white cursor-custom">
       <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10" src="/Background1.mp4" />
+      <audio ref={audioRef} loop src="/music.mp3" preload="auto" />
 
       {/* Gate Screen */}
       <AnimatePresence>
@@ -36,7 +49,7 @@ export default function Home() {
           <motion.div 
             exit={{ opacity: 0 }} 
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xl cursor-custom-pointer" 
-            onClick={() => setEntered(true)}
+            onClick={enterSite}
           >
             <h1 className="text-4xl tracking-widest font-light">click to enter</h1>
           </motion.div>
