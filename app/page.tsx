@@ -6,16 +6,17 @@ import { motion } from 'framer-motion';
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
-  const DISCORD_ID = 'YOUR_DISCORD_ID_HERE'; // Replace with your 18-digit ID
+  const DISCORD_ID = '590893917587898369';
   const { data } = useSWR(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`, fetcher, { refreshInterval: 5000 });
-  const [started, setStarted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const status = data?.data?.discord_status || 'offline';
 
   const startExperience = () => {
-    setStarted(true);
-    audioRef.current?.play();
+    if (audioRef.current) {
+      audioRef.current.currentTime = 7.008; // Starts song at 7s 8ms
+      audioRef.current.play();
+    }
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -31,7 +32,6 @@ export default function Home() {
           className="bg-white/20 backdrop-blur-md border border-white/30 rounded-3xl p-10 text-center w-80 shadow-2xl"
         >
           <div className="relative inline-block mb-4">
-            {/* Using local pfp.jpg from public folder */}
             <img src="/pfp.jpg" alt="Profile" className="w-24 h-24 rounded-full border-4 border-white/20" />
             <div className={`absolute bottom-1 right-1 w-5 h-5 rounded-full border-4 border-black ${
               status === 'online' ? 'bg-green-500' : status === 'idle' ? 'bg-yellow-500' : status === 'dnd' ? 'bg-red-500' : 'bg-gray-500'
@@ -48,7 +48,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Expanded About Section */}
+      {/* About Section */}
       <section id="about" className="h-screen flex items-center justify-center p-10">
         <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-3xl p-10 max-w-2xl text-center shadow-2xl">
           <h2 className="text-3xl font-bold mb-6">About Me</h2>
