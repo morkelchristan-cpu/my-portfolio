@@ -2,6 +2,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
+// Metadata for the page title
+export const metadata = {
+  title: 'Chris.io',
+};
+
 const techStack = [
   { name: 'Discord Dev', icon: '/dev.png' },
   { name: 'VsCode.js', icon: '/vscode.png' },
@@ -90,20 +95,35 @@ export default function Home() {
           </section>
 
           <section id="about" className="min-h-screen p-20 flex flex-col items-center">
-            <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="text-6xl font-bold mb-16">The Developer Profile</motion.h2>
-            <div className="grid md:grid-cols-2 gap-12 max-w-7xl">
-              <motion.div initial={{ x: -50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} className="bg-white/5 p-8 rounded-3xl backdrop-blur-lg border border-white/10">
-                <h3 className="text-3xl font-bold mb-6 text-blue-300">My Philosophy</h3>
-                <p className="leading-relaxed opacity-80">I architect ecosystems. From optimizing BOLO logging in FiveM to full-stack portals, my goal is to shave seconds off admin workflows.</p>
-              </motion.div>
-              <motion.div initial={{ x: 50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} className="bg-white/5 p-8 rounded-3xl backdrop-blur-lg border border-white/10">
-                <h3 className="text-3xl font-bold mb-6 text-green-300">Current Focus</h3>
-                <ul className="space-y-4 opacity-80">
-                  <li>🚀 <b>ZHPD Nexus</b>: Next-gen police operations portal.</li>
-                  <li>🤖 <b>Bot Infrastructure</b>: High-uptime Node.js automation.</li>
-                  <li>🎨 <b>3D Assets</b>: Environment design in Blender.</li>
-                </ul>
-              </motion.div>
+            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-16">
+              <h2 className="text-6xl font-bold mb-4">Hi, I'm Chris.</h2>
+              <p className="text-2xl opacity-70 italic">Architecting the future of community management and web experiences.</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl">
+              {[
+                { title: "Who I Am", text: "I am a 17-year-old developer from Canada with a deep passion for building robust digital ecosystems.", color: "text-blue-300" },
+                { title: "The Mission", text: "To replace manual, tedious administrative tasks with high-performance, automated logic.", color: "text-green-300" },
+                { title: "Discord Expertise", text: "I specialize in advanced bot development using Node.js to manage high-traffic LEO communities.", color: "text-yellow-300" },
+                { title: "Web Architecture", text: "I build responsive, glass-morphism themed web portals like ZHPD Nexus using Next.js and Supabase.", color: "text-purple-300" },
+                { title: "Design Language", text: "My aesthetic is defined by cloud themes, abstract glass effects, and clean, blue-toned palettes.", color: "text-pink-300" },
+                { title: "3D Manipulation", text: "I am actively mastering Blender, focusing on car modeling and complex environment mesh manipulation.", color: "text-indigo-300" },
+                { title: "Problem Solving", text: "Whether it's BOLO monitoring or ticket system cooldowns, I focus on data-driven solutions.", color: "text-teal-300" },
+                { title: "Collaborative Spirit", text: "I thrive in team environments, streaming and building tools alongside my community friends.", color: "text-orange-300" },
+                { title: "Future Vision", text: "I'm constantly pushing the limits of my codebase to optimize performance and user experience.", color: "text-red-300" }
+              ].map((block, i) => (
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, scale: 0.8 }} 
+                  whileInView={{ opacity: 1, scale: 1 }} 
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="bg-white/5 p-8 rounded-3xl backdrop-blur-lg border border-white/10"
+                >
+                  <h3 className={`text-2xl font-bold mb-4 ${block.color}`}>{block.title}</h3>
+                  <p className="leading-relaxed opacity-80">{block.text}</p>
+                </motion.div>
+              ))}
             </div>
           </section>
 
