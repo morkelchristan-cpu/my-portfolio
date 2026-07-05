@@ -2,11 +2,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
-// Metadata for the page title
-export const metadata = {
-  title: 'Chris.io',
-};
-
 const techStack = [
   { name: 'Discord Dev', icon: '/dev.png' },
   { name: 'VsCode.js', icon: '/vscode.png' },
@@ -44,7 +39,9 @@ export default function Home() {
   const [text, setText] = useState('');
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  // Set the page title on client side
   useEffect(() => {
+    document.title = 'Chris.io';
     if (entered) runTypeEffect(0, 0, false, setText);
   }, [entered]);
 
