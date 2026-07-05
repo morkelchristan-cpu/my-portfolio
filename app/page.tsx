@@ -8,7 +8,7 @@ const techStack = [
   { name: 'Next.js', icon: '/nextjs.png' }
 ];
 
-const PHRASES = ["building cool stuff on the web.", "discord.", "17 y/o from Canada"];
+const PHRASES = ["building cool stuff on the web.", "discord.", "18 y/o from Africa"];
 
 function runTypeEffect(
   phraseIndex: number, 
@@ -39,7 +39,6 @@ export default function Home() {
   const [text, setText] = useState('');
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Set the page title on client side
   useEffect(() => {
     document.title = 'Chris.io';
     if (entered) runTypeEffect(0, 0, false, setText);
@@ -88,6 +87,16 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-lg h-8 mb-6">{text}<span className="animate-pulse">|</span></p>
+              
+              {/* Socials moved here */}
+              <div className="flex justify-center gap-6 mt-4">
+                <a href="https://discord.com/users/590893917587898369" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                  <img src="/discord.png" alt="Discord" className="w-8 h-8 opacity-70 hover:opacity-100" />
+                </a>
+                <a href="https://github.com/morkelchristan-cpu" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
+                  <img src="/github.png" alt="GitHub" className="w-8 h-8 opacity-70 hover:opacity-100" />
+                </a>
+              </div>
             </motion.div>
           </section>
 
@@ -99,7 +108,7 @@ export default function Home() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl">
               {[
-                { title: "Who I Am", text: "I am a 17-year-old developer from Canada with a deep passion for building robust digital ecosystems.", color: "text-blue-300" },
+                { title: "Who I Am", text: "I am an 18-year-old developer from Africa with a deep passion for building robust digital ecosystems.", color: "text-blue-300" },
                 { title: "The Mission", text: "To replace manual, tedious administrative tasks with high-performance, automated logic.", color: "text-green-300" },
                 { title: "Discord Expertise", text: "I specialize in advanced bot development using Node.js to manage high-traffic LEO communities.", color: "text-yellow-300" },
                 { title: "Web Architecture", text: "I build responsive, glass-morphism themed web portals like ZHPD Nexus using Next.js and Supabase.", color: "text-purple-300" },
@@ -123,15 +132,6 @@ export default function Home() {
               ))}
             </div>
           </section>
-
-          <footer className="fixed bottom-0 w-full p-6 flex justify-center gap-6 z-40">
-            <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
-              <img src="/discord.png" alt="Discord" className="w-8 h-8 opacity-70 hover:opacity-100" />
-            </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
-              <img src="/github.png" alt="GitHub" className="w-8 h-8 opacity-70 hover:opacity-100" />
-            </a>
-          </footer>
         </>
       )}
     </main>
