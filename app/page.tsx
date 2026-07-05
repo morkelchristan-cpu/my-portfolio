@@ -13,7 +13,6 @@ export default function Home() {
   const [text, setText] = useState('');
   const audioRef = useRef<HTMLAudioElement>(null);
   
-  // Typing animation sequence
   const phrases = ["building cool stuff on the web.", "discord.", "17 y/o from Canada"];
   
   useEffect(() => {
@@ -47,7 +46,7 @@ export default function Home() {
   };
 
   return (
-    <main className="h-screen w-full flex items-center justify-center text-white cursor-custom">
+    <main className="h-screen w-full overflow-y-auto text-white cursor-custom scroll-smooth">
       <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10" src="/Background1.mp4" />
       <audio ref={audioRef} loop src="/music.mp3" preload="auto" />
 
@@ -59,32 +58,45 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {entered && (
+      {/* Page 1 */}
+      <section className="h-screen flex items-center justify-center">
+        {entered && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.02 }}
+            className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 text-center w-80 shadow-2xl"
+          >
+            <img src="/pfp.jpg" alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10" />
+            <h1 className="text-4xl font-bold mb-2">Chris.io</h1>
+            <div className="flex justify-center gap-3 bg-white/5 p-2 rounded-full mb-4 w-fit mx-auto border border-white/5">
+              {techStack.map((t) => (
+                <div key={t.name} className="relative group cursor-custom-pointer">
+                  <img src={t.icon} alt={t.name} className="w-5 h-5 object-contain opacity-80 group-hover:opacity-100" />
+                </div>
+              ))}
+            </div>
+            <p className="text-lg h-8 mb-6 opacity-90">{text}<span className="animate-pulse">|</span></p>
+            <div className="flex justify-center gap-6 text-2xl">
+              <a href="https://discord.com/users/590893917587898369" target="_blank" className="hover:opacity-70 transition"><img src="/discord.png" className="w-6 h-6" /></a>
+              <a href="https://github.com/morkelchristan-cpu" target="_blank" className="hover:opacity-70 transition"><img src="/github.png" className="w-6 h-6" /></a>
+            </div>
+          </motion.div>
+        )}
+      </section>
+
+      {/* Page 2: About/Introduction */}
+      <section id="about" className="h-screen flex items-center justify-center p-10">
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-          whileHover={{ scale: 1.02 }}
-          className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 text-center w-80 shadow-2xl"
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+          className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 max-w-lg text-center shadow-2xl"
         >
-          <img src="/pfp.jpg" alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10" />
-          <h1 className="text-4xl font-bold mb-2">twizzy</h1>
-
-          <div className="flex justify-center gap-3 bg-white/5 p-2 rounded-full mb-4 w-fit mx-auto border border-white/5">
-            {techStack.map((t) => (
-              <div key={t.name} className="relative group cursor-custom-pointer">
-                <img src={t.icon} alt={t.name} className="w-5 h-5 object-contain opacity-80 group-hover:opacity-100" />
-              </div>
-            ))}
-          </div>
-
-          <p className="text-sm h-6 mb-6 opacity-80">{text}<span className="animate-pulse">|</span></p>
-
-          <div className="flex justify-center gap-6 text-2xl">
-            <a href="https://discord.com/users/590893917587898369" target="_blank" className="hover:opacity-70 transition"><img src="/discord.png" className="w-6 h-6" /></a>
-            <a href="https://github.com/morkelchristan-cpu" target="_blank" className="hover:opacity-70 transition"><img src="/github.png" className="w-6 h-6" /></a>
-            <a href="#" className="hover:opacity-70 transition"><img src="/globe.png" className="w-6 h-6" /></a>
-          </div>
+          <h2 className="text-3xl font-bold mb-4">Introduction</h2>
+          <p className="text-lg leading-relaxed opacity-90">
+            I started my journey in Discord development back in 2024 because I wanted to simplify community management and bring automation to LEO roleplay servers. 
+            My passion lies in creating efficient, user-friendly tools that handle everything from roster management to ticketing.
+          </p>
         </motion.div>
-      )}
+      </section>
     </main>
   );
 }
