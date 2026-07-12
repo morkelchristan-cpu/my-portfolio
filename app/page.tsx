@@ -112,9 +112,9 @@ export default function Home() {
                   <div className="flex justify-between items-center mb-6">
                     <h3 className="text-2xl font-bold">{p.name}</h3>
                     <div className="flex items-center gap-2 text-[10px] uppercase bg-white/5 px-4 py-2 rounded-full">
-                      {p.status === 'Active' && <><div className="w-2 h-2 rounded-full bg-gray-500 animate-pulse" /> Active</>}
+                      {p.status === 'Active' && <><div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> Active</>}
                       {p.status === 'Idle' && <>🌙 Idle</>}
-                      {p.status === 'Inactive' && <><div className="w-2 h-2 rounded-full bg-red-900" /> Inactive</>}
+                      {p.status === 'Inactive' && <><div className="w-2 h-2 rounded-full bg-red-500" /> Inactive</>}
                     </div>
                   </div>
                   <p className="opacity-60 text-md leading-relaxed">{p.desc}</p>
