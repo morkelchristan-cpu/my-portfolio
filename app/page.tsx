@@ -63,7 +63,6 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [entered, phraseIndex, charIndex, isDeleting]);
 
-  // Updated skip: changes track and immediately calls play()
   const skipTrack = () => {
     const nextIndex = (trackIndex + 1) % MUSIC_TRACKS.length;
     setTrackIndex(nextIndex);
@@ -92,7 +91,7 @@ export default function Home() {
 
       {entered && (
         <>
-          <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl w-48 text-center shadow-2xl">
+          <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 glass p-4 rounded-2xl w-48 text-center shadow-2xl">
             <p className="text-xs uppercase tracking-widest opacity-60 mb-2">Now Playing</p>
             <p className="font-bold text-sm mb-3">{MUSIC_TRACKS[trackIndex].name}</p>
             <div className="flex justify-center gap-4">
@@ -102,7 +101,7 @@ export default function Home() {
           </div>
 
           <section id="home" className="h-screen flex items-center justify-center">
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 text-center w-80 shadow-2xl">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass rounded-[2rem] p-10 text-center w-80 shadow-2xl">
               <img src="/pfp.jpg" alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10" />
               <h1 className="text-4xl font-bold mb-2">Chris.io</h1>
               <div className="flex justify-center gap-3 bg-white/5 p-2 rounded-full mb-4 w-fit mx-auto border border-white/5">
@@ -115,7 +114,8 @@ export default function Home() {
               </div>
               <p className="text-lg h-8 mb-6">{text}<span className="animate-pulse">|</span></p>
               <div className="flex justify-center gap-6 mt-4">
-                <a href="https://discord.com/users/590893917587898369" target="_blank" rel="noopener noreferrer"><img src="/discord.png" alt="Discord" className="w-8 h-8 opacity-70 hover:opacity-100" /></a>
+                {/* Updated to discord.gif */}
+                <a href="https://discord.com/users/590893917587898369" target="_blank" rel="noopener noreferrer"><img src="/discord.gif" alt="Discord" className="w-8 h-8 opacity-70 hover:opacity-100" /></a>
                 <a href="https://github.com/morkelchristan-cpu" target="_blank" rel="noopener noreferrer"><img src="/github.png" alt="GitHub" className="w-8 h-8 opacity-70 hover:opacity-100" /></a>
               </div>
             </motion.div>
@@ -138,7 +138,7 @@ export default function Home() {
                 { title: "Collaborative Spirit", text: "I thrive in team environments, streaming and building tools alongside my community friends.", color: "text-orange-300" },
                 { title: "Future Vision", text: "I'm constantly pushing the limits of my codebase to optimize performance and user experience.", color: "text-red-300" }
               ].map((block, i) => (
-                <motion.div key={i} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} whileHover={{ scale: 1.05 }} transition={{ delay: i * 0.05 }} className="bg-white/5 p-8 rounded-3xl backdrop-blur-lg border border-white/10">
+                <motion.div key={i} initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} whileHover={{ scale: 1.05 }} transition={{ delay: i * 0.05 }} className="glass p-8 rounded-3xl">
                   <h3 className={`text-2xl font-bold mb-4 ${block.color}`}>{block.title}</h3>
                   <p className="leading-relaxed opacity-80">{block.text}</p>
                 </motion.div>
