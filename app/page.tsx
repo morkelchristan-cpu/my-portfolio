@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // --- Components ---
 const CustomCursor = () => {
@@ -47,9 +47,10 @@ export default function Home() {
   return (
     <main className="text-white selection:bg-blue-500/30 overflow-x-hidden cursor-none">
       <CustomCursor />
-      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10" src="/Background1.mp4" />
+      {/* Updated Media */}
+      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10" src="/backgroundibiza.mp4" />
       <div className="fixed inset-0 bg-black/60 -z-10" />
-      <audio ref={audioRef} src="/music.mp3" loop />
+      <audio ref={audioRef} src="/ibiza.mp3" loop />
 
       {!entered ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-3xl cursor-pointer" onClick={() => { setEntered(true); audioRef.current?.play(); }}>
