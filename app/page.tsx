@@ -84,7 +84,9 @@ export default function Home() {
             <div className="space-y-20">
               {[
                 { title: "The Origin", text: "At 18, I am building the digital infrastructure I once dreamed of using. Born in Africa, my journey started with a simple passion for gaming, which evolved into a career in system architecture and automation." },
-                { title: "Technical Focus", text: "My expertise lies in Discord development, Next.js, and high-concurrency Node.js environments. I specialize in building custom bots that bridge manual administration gaps with performance." }
+                { title: "Why I Build", text: "I believe great software is more than just code—it's about solving real problems through thoughtful design. If it isn't intuitive and visually elegant, it isn't finished." },
+                { title: "Technical Focus", text: "My expertise lies in Discord development, Next.js, and high-concurrency Node.js environments. I specialize in building custom bots that bridge manual administration gaps with performance." },
+                { title: "Future Vision", text: "I am constantly pushing the boundaries of what is possible on the web, experimenting with 3D environments and crafting automated ecosystems that stand the test of time." }
               ].map((item, i) => (
                 <motion.div key={i} initial={{ x: -50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }}>
                   <h3 className="text-xl font-bold mb-4 text-blue-400">{item.title}</h3>
@@ -98,10 +100,24 @@ export default function Home() {
             <h2 className="text-6xl font-bold mb-16">Active Infrastructure.</h2>
             <div className="grid gap-6">
               {PROJECT_DETAILS.map(p => (
-                <motion.div key={p.name} className="p-10 bg-white/[0.03] backdrop-blur-lg border border-white/5 rounded-[2rem]">
-                  <h3 className="text-2xl font-bold mb-2">{p.name}</h3>
-                  <p className="opacity-60 text-md">{p.desc}</p>
+                <motion.div key={p.name} whileHover={{ scale: 1.02 }} className="p-10 bg-white/[0.03] backdrop-blur-lg border border-white/5 rounded-[2rem] hover:border-blue-500/20 transition">
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-2xl font-bold">{p.name}</h3>
+                  </div>
+                  <p className="opacity-60 text-md leading-relaxed">{p.desc}</p>
                 </motion.div>
+              ))}
+            </div>
+          </section>
+
+          <section id="socials" className="h-screen flex flex-col justify-center items-center text-center px-10">
+            <h2 className="text-sm uppercase tracking-[0.4em] opacity-40 mb-20">Connect</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
+              {[{ label: 'Twitch', desc: 'Live Coding' }, { label: 'YouTube', desc: 'Dev Vids' }, { label: 'GitHub', desc: 'Open Source' }].map(s => (
+                <motion.a key={s.label} whileHover={{ y: -10 }} href="#" className="p-12 bg-white/5 border border-white/5 rounded-3xl hover:border-blue-500/50 transition">
+                  <span className="text-4xl font-bold block hover:text-blue-400">{s.label}</span>
+                  <span className="text-[10px] opacity-40 uppercase tracking-widest mt-6 block">{s.desc}</span>
+                </motion.a>
               ))}
             </div>
           </section>
