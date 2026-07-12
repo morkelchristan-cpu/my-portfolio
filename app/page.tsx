@@ -19,8 +19,8 @@ const CustomCursor = () => {
       transition={{ type: 'spring', damping: 30, stiffness: 400, mass: 0.2 }}
     >
       <div className="relative w-6 h-6">
-        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-blue-400" />
-        <div className="absolute top-0 left-1/2 w-[1px] h-full bg-blue-400" />
+        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gray-400" />
+        <div className="absolute top-0 left-1/2 w-[1px] h-full bg-gray-400" />
       </div>
     </motion.div>
   );
@@ -50,41 +50,41 @@ export default function Home() {
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <main className="text-white selection:bg-blue-500/30 overflow-x-hidden cursor-none">
+    <main className="text-white selection:bg-gray-500/30 overflow-x-hidden cursor-none">
       <CustomCursor />
       
       <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10" src="/background_v2.mp4" />
-      <div className="fixed inset-0 bg-black/60 -z-10" />
+      <div className="fixed inset-0 bg-black/70 -z-10" />
       <audio ref={audioRef} src="/ibiza.mp3" loop />
 
       {!entered ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-3xl cursor-pointer" onClick={() => { setEntered(true); audioRef.current?.play(); }}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-3xl cursor-pointer" onClick={() => { setEntered(true); audioRef.current?.play(); }}>
           <motion.h1 animate={{ opacity: [0.5, 1, 0.5] }} transition={{ repeat: Infinity, duration: 2 }} className="tracking-[0.8em] uppercase text-xs font-light">Click to Access Secure Terminal</motion.h1>
         </div>
       ) : (
         <>
           <div className="fixed top-8 right-8 z-50 bg-white/5 backdrop-blur-xl p-4 rounded-2xl border border-white/10 w-48 shadow-2xl">
             <span className="text-[9px] opacity-40 uppercase tracking-widest mb-2 block">Audio Volume</span>
-            <input type="range" min="0" max="1" step="0.1" value={volume} onChange={handleVolume} className="w-full h-1 accent-blue-500 cursor-pointer" />
+            <input type="range" min="0" max="1" step="0.1" value={volume} onChange={handleVolume} className="w-full h-1 accent-gray-500 cursor-pointer" />
           </div>
 
           <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-50 bg-white/5 backdrop-blur-xl px-8 py-3 rounded-full border border-white/10 flex gap-8 text-[10px] uppercase tracking-[0.2em] shadow-2xl">
             {['home', 'about', 'projects', 'socials'].map(item => (
-              <button key={item} onClick={() => scrollTo(item)} className="hover:text-blue-400 transition">{item}</button>
+              <button key={item} onClick={() => scrollTo(item)} className="hover:text-gray-400 transition">{item}</button>
             ))}
           </nav>
 
           <section id="home" className="h-screen flex flex-col items-center justify-center text-center">
-            <motion.img initial={{ scale: 0 }} animate={{ scale: 1 }} src="/your-profile.gif" className="w-40 h-40 rounded-full mb-8 border border-white/10 shadow-[0_0_50px_rgba(59,130,246,0.3)]" alt="Profile" />
+            <motion.img initial={{ scale: 0 }} animate={{ scale: 1 }} src="/your-profile.gif" className="w-40 h-40 rounded-full mb-8 border border-white/10 shadow-[0_0_50px_rgba(255,255,255,0.1)]" alt="Profile" />
             <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-8xl font-bold tracking-tighter">Chris.io</motion.h1>
             
             <div className="flex gap-4 mt-6">
               {['Java.script', 'Next.js', 'Discord.js', 'Blender'].map(badge => (
-                <span key={badge} className="px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] tracking-widest uppercase text-blue-300">{badge}</span>
+                <span key={badge} className="px-4 py-1.5 bg-gray-500/10 border border-gray-500/20 rounded-full text-[10px] tracking-widest uppercase text-gray-300">{badge}</span>
               ))}
             </div>
             
-            <p className="mt-6 text-blue-300/50 font-mono tracking-widest text-sm uppercase">Digital Architect</p>
+            <p className="mt-6 text-gray-300/50 font-mono tracking-widest text-sm uppercase">Digital Architect</p>
           </section>
 
           <section id="about" className="min-h-screen py-32 max-w-4xl mx-auto px-10">
@@ -97,7 +97,7 @@ export default function Home() {
                 { title: "Future Vision", text: "I am constantly pushing the boundaries of what is possible on the web, experimenting with 3D environments and crafting automated ecosystems that stand the test of time." }
               ].map((item, i) => (
                 <motion.div key={i} initial={{ x: -50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }}>
-                  <h3 className="text-xl font-bold mb-4 text-blue-400">{item.title}</h3>
+                  <h3 className="text-xl font-bold mb-4 text-gray-400">{item.title}</h3>
                   <p className="text-lg opacity-70 leading-relaxed">{item.text}</p>
                 </motion.div>
               ))}
@@ -108,13 +108,13 @@ export default function Home() {
             <h2 className="text-6xl font-bold mb-16">Active Infrastructure.</h2>
             <div className="grid gap-6">
               {PROJECT_DETAILS.map(p => (
-                <motion.div key={p.name} whileHover={{ scale: 1.02 }} className="p-10 bg-white/[0.03] backdrop-blur-lg border border-white/5 rounded-[2rem] hover:border-blue-500/20 transition">
+                <motion.div key={p.name} whileHover={{ scale: 1.02 }} className="p-10 bg-white/[0.03] backdrop-blur-lg border border-white/5 rounded-[2rem] hover:border-gray-500/20 transition">
                   <div className="flex justify-between items-center mb-6">
                     <h3 className="text-2xl font-bold">{p.name}</h3>
                     <div className="flex items-center gap-2 text-[10px] uppercase bg-white/5 px-4 py-2 rounded-full">
-                      {p.status === 'Active' && <><div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> Active</>}
+                      {p.status === 'Active' && <><div className="w-2 h-2 rounded-full bg-gray-500 animate-pulse" /> Active</>}
                       {p.status === 'Idle' && <>🌙 Idle</>}
-                      {p.status === 'Inactive' && <><div className="w-2 h-2 rounded-full bg-red-500" /> Inactive</>}
+                      {p.status === 'Inactive' && <><div className="w-2 h-2 rounded-full bg-red-900" /> Inactive</>}
                     </div>
                   </div>
                   <p className="opacity-60 text-md leading-relaxed">{p.desc}</p>
@@ -137,9 +137,9 @@ export default function Home() {
                   href={s.href} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="p-12 bg-white/5 border border-white/5 rounded-3xl hover:border-blue-500/50 transition"
+                  className="p-12 bg-white/5 border border-white/5 rounded-3xl hover:border-gray-500/50 transition"
                 >
-                  <span className="text-4xl font-bold block hover:text-blue-400">{s.label}</span>
+                  <span className="text-4xl font-bold block hover:text-gray-400">{s.label}</span>
                   <span className="text-[10px] opacity-40 uppercase tracking-widest mt-6 block">{s.desc}</span>
                 </motion.a>
               ))}
