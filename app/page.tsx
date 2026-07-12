@@ -1,103 +1,83 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef } from 'react';
+import { motion } from 'framer-motion';
 
-const techStack = [
-  { name: 'Discord Dev', icon: '/dev.png' },
-  { name: 'VsCode.js', icon: '/vscode.png' },
-  { name: 'Next.js', icon: '/nextjs.png' }
-];
-
-const PHRASES = ["building cool stuff on the web.", "discord.", "18 y/o from Africa"];
-const MUSIC_TRACKS = [
-  { name: "I like the way you kiss me", path: "/music.mp3" },
-  { name: "Dakati", path: "/dakati.mp3" }
-];
-
-// Project status data
-const projectStatus = [
-  { name: "ZHPD Nexus", status: "Active" },
-  { name: "Bot Infrastructure", status: "Updating" },
-  { name: "3D Environments", status: "Idle" }
+// --- Expanded Content Data ---
+const PROJECT_DETAILS = [
+  { name: "ZHPD Nexus", status: "Active", desc: "An enterprise-grade Discord portal designed for massive community scaling. It features automated role management and real-time incident logging." },
+  { name: "Bot Infrastructure", status: "Updating", desc: "A robust back-end ecosystem built with Node.js to bridge manual administration gaps with high-performance automation." },
+  { name: "3D Environments", status: "Idle", desc: "A personal creative project exploring Blender-based 3D modeling for immersive visual environments and character rigs." }
 ];
 
 export default function Home() {
-  const [entered, setEntered] = useState(false);
-  const [text, setText] = useState('');
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [trackIndex, setTrackIndex] = useState(0);
-  const [volume, setVolume] = useState(0.5);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    document.title = 'Chris.io';
-    setTrackIndex(Math.floor(Math.random() * MUSIC_TRACKS.length));
-  }, []);
-
-  useEffect(() => {
-    if (audioRef.current) audioRef.current.volume = volume;
-  }, [volume]);
-
-  useEffect(() => {
-    if (!entered) return;
-    const timer = setTimeout(() => {
-      const currentPhrase = PHRASES[phraseIndex];
-      if (isDeleting) {
-        setText(currentPhrase.substring(0, charIndex - 1));
-        setCharIndex(charIndex - 1);
-        if (charIndex - 1 === 0) { setIsDeleting(false); setPhraseIndex((prev) => (prev + 1) % PHRASES.length); }
-      } else {
-        setText(currentPhrase.substring(0, charIndex + 1));
-        setCharIndex(charIndex + 1);
-        if (charIndex + 1 === currentPhrase.length) setTimeout(() => setIsDeleting(true), 1500);
-      }
-    }, isDeleting ? 40 : 80);
-    return () => clearTimeout(timer);
-  }, [entered, phraseIndex, charIndex, isDeleting]);
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    el?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <main className="h-screen w-full overflow-y-auto scroll-smooth text-white selection:bg-blue-500/30">
-      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10 brightness-[0.25]" src="/Background1.mp4" />
-      <audio ref={audioRef} src={MUSIC_TRACKS[trackIndex].path} />
+    <main className="bg-black text-white selection:bg-blue-500/30 font-sans" ref={scrollRef}>
+      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10 brightness-[0.2]" src="/Background1.mp4" />
 
-      {!entered ? (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/60 backdrop-blur-2xl cursor-pointer" onClick={() => { setEntered(true); audioRef.current?.play(); }}>
-          <motion.h1 animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 2, repeat: Infinity }} className="text-3xl tracking-[0.5em] font-light uppercase">Click to Enter</motion.h1>
+      {/* Persistent Navigation */}
+      <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-50 bg-white/5 backdrop-blur-xl px-8 py-3 rounded-full border border-white/10 flex gap-8 text-[10px] uppercase tracking-[0.2em]">
+        {['home', 'about', 'projects', 'socials'].map(item => (
+          <button key={item} onClick={() => scrollTo(item)} className="hover:text-blue-400 transition">{item}</button>
+        ))}
+      </nav>
+
+      {/* 1. Home Section */}
+      <section id="home" className="h-screen flex flex-col items-center justify-center text-center">
+        <motion.img initial={{ scale: 0.8 }} animate={{ scale: 1 }} src="/your-profile.gif" className="w-32 h-32 rounded-full mb-8 border border-white/10" />
+        <h1 className="text-8xl font-bold tracking-tighter">Chris.io</h1>
+        <p className="mt-6 text-blue-300 font-mono tracking-widest text-sm uppercase">Digital Architect & Streamer</p>
+      </section>
+
+      {/* 2. About Section */}
+      <section id="about" className="min-h-screen py-32 max-w-4xl mx-auto px-10">
+        <h2 className="text-5xl font-bold mb-12">The Architect.</h2>
+        <div className="space-y-8 text-lg opacity-60 leading-relaxed">
+          <p>At 18, I am building the digital infrastructure I once dreamed of using. Born in Africa, my journey started with a simple passion for gaming, which evolved into a career in system architecture and automation.</p>
+          <p>I believe in "clean code" and "love-first design." Every project I touch is aimed at creating a seamless, glass-themed experience that respects the user's journey. I am a firm believer that the best tools are the ones that disappear—leaving only functionality and elegance.</p>
+          <p>My expertise lies in Discord development, Next.js, and high-concurrency Node.js environments. When I'm not coding, I am diving deep into 3D modeling in Blender to push the boundaries of what is visually possible on the web.</p>
         </div>
-      ) : (
-        <div className="max-w-5xl mx-auto px-6 py-20">
-          
-          {/* HUD: Project Status & Volume */}
-          <div className="fixed top-8 right-8 z-50 bg-white/5 backdrop-blur-md p-5 rounded-2xl border border-white/10 w-72">
-            <h4 className="text-[10px] uppercase tracking-widest opacity-40 mb-3">Project Status</h4>
-            <div className="space-y-2 mb-6">
-              {projectStatus.map((p) => (
-                <div key={p.name} className="flex justify-between text-xs">
-                  <span className="opacity-70">{p.name}</span>
-                  <span className={`font-mono ${p.status === 'Active' ? 'text-green-400' : p.status === 'Updating' ? 'text-yellow-400' : 'text-gray-500'}`}>{p.status}</span>
-                </div>
-              ))}
-            </div>
-            <div className="flex items-center gap-3 border-t border-white/10 pt-4">
-              <span className="text-[10px] opacity-40">VOL</span>
-              <input type="range" min="0" max="1" step="0.1" value={volume} onChange={(e) => setVolume(parseFloat(e.target.value))} className="w-full h-1 bg-white/20 rounded-lg appearance-none cursor-pointer" />
-            </div>
-          </div>
+      </section>
 
-          <section id="home" className="min-h-screen flex flex-col items-center justify-center">
-            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] p-10 rounded-[3rem] text-center w-80 shadow-2xl">
-              <img src="/your-profile.gif" alt="Profile" className="w-28 h-28 rounded-full mx-auto mb-6 border-2 border-white/10 object-cover" />
-              <h1 className="text-4xl font-bold mb-2">Chris.io</h1>
-              <p className="text-blue-300 font-mono text-sm h-8">{text}<span className="animate-pulse">|</span></p>
-            </motion.div>
-          </section>
-
-          {/* ... (Keep other sections as before) */}
+      {/* 3. Projects Section */}
+      <section id="projects" className="min-h-screen py-32 max-w-4xl mx-auto px-10">
+        <h2 className="text-5xl font-bold mb-16">Active Works.</h2>
+        <div className="grid gap-8">
+          {PROJECT_DETAILS.map(p => (
+            <div key={p.name} className="p-10 bg-white/[0.02] border border-white/10 rounded-[2rem] hover:border-blue-500/30 transition">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold">{p.name}</h3>
+                <span className="text-[10px] px-3 py-1 bg-white/5 rounded-full">{p.status}</span>
+              </div>
+              <p className="opacity-50 text-sm leading-loose">{p.desc}</p>
+            </div>
+          ))}
         </div>
-      )}
+      </section>
+
+      {/* 4. Socials Section */}
+      <section id="socials" className="h-screen flex flex-col justify-center items-center text-center px-10">
+        <h2 className="text-sm uppercase tracking-[0.4em] opacity-40 mb-20">Find Me Online</h2>
+        <div className="space-y-10">
+          {[
+            { label: 'Twitch', handle: '@cloudiit_v' },
+            { label: 'YouTube', handle: '@cloudiit_V' },
+            { label: 'GitHub', handle: 'morkelchristan-cpu' }
+          ].map(s => (
+            <a key={s.label} href="#" className="block group">
+              <span className="text-6xl font-bold group-hover:text-blue-400 transition">{s.label}</span>
+              <p className="opacity-30 mt-2 tracking-widest">{s.handle}</p>
+            </a>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
