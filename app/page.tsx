@@ -78,7 +78,6 @@ export default function Home() {
             <motion.img initial={{ scale: 0 }} animate={{ scale: 1 }} src="/your-profile.gif" className="w-40 h-40 rounded-full mb-8 border border-white/10 shadow-[0_0_50px_rgba(59,130,246,0.3)]" alt="Profile" />
             <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-8xl font-bold tracking-tighter">Chris.io</motion.h1>
             
-            {/* Added Badges */}
             <div className="flex gap-4 mt-6">
               {['Java.script', 'Next.js', 'Discord.js', 'Blender'].map(badge => (
                 <span key={badge} className="px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] tracking-widest uppercase text-blue-300">{badge}</span>
@@ -112,7 +111,6 @@ export default function Home() {
                 <motion.div key={p.name} whileHover={{ scale: 1.02 }} className="p-10 bg-white/[0.03] backdrop-blur-lg border border-white/5 rounded-[2rem] hover:border-blue-500/20 transition">
                   <div className="flex justify-between items-center mb-6">
                     <h3 className="text-2xl font-bold">{p.name}</h3>
-                    {/* Status Indicators */}
                     <div className="flex items-center gap-2 text-[10px] uppercase bg-white/5 px-4 py-2 rounded-full">
                       {p.status === 'Active' && <><div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> Active</>}
                       {p.status === 'Idle' && <>🌙 Idle</>}
@@ -128,8 +126,19 @@ export default function Home() {
           <section id="socials" className="h-screen flex flex-col justify-center items-center text-center px-10">
             <h2 className="text-sm uppercase tracking-[0.4em] opacity-40 mb-20">Connect</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-4xl">
-              {[{ label: 'Twitch', desc: 'Live Coding' }, { label: 'YouTube', desc: 'Dev Vids' }, { label: 'GitHub', desc: 'Open Source' }].map(s => (
-                <motion.a key={s.label} whileHover={{ y: -10 }} href="#" className="p-12 bg-white/5 border border-white/5 rounded-3xl hover:border-blue-500/50 transition">
+              {[
+                { label: 'Twitch', desc: 'Live Coding', href: 'https://twitch.tv/cloudiit_v' },
+                { label: 'YouTube', desc: 'Dev Vids', href: 'https://www.youtube.com/@cloudiit_V' },
+                { label: 'GitHub', desc: 'Open Source', href: 'https://github.com/morkelchristan-cpu' }
+              ].map(s => (
+                <motion.a 
+                  key={s.label} 
+                  whileHover={{ y: -10 }} 
+                  href={s.href} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="p-12 bg-white/5 border border-white/5 rounded-3xl hover:border-blue-500/50 transition"
+                >
                   <span className="text-4xl font-bold block hover:text-blue-400">{s.label}</span>
                   <span className="text-[10px] opacity-40 uppercase tracking-widest mt-6 block">{s.desc}</span>
                 </motion.a>
