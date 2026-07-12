@@ -47,8 +47,8 @@ export default function Home() {
   return (
     <main className="text-white selection:bg-blue-500/30 overflow-x-hidden cursor-none">
       <CustomCursor />
-      {/* Updated Media */}
-      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10" src="/backgroundibiza.mp4" />
+      {/* Updated Video File Name */}
+      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10" src="/background_v2.mp4" />
       <div className="fixed inset-0 bg-black/60 -z-10" />
       <audio ref={audioRef} src="/ibiza.mp3" loop />
 
