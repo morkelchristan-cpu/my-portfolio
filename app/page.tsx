@@ -86,38 +86,38 @@ export default function Home() {
           <div className="h-full flex items-center justify-center">
             <AnimatePresence mode="wait">
               {activeSection === 'Home' && (
-                <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 text-center w-80 shadow-2xl">
+                <motion.div key="home" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 text-center w-80 shadow-2xl">
                   <img src="/your-profile.gif" alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10 object-cover" />
                   <h1 className="text-4xl font-bold mb-2">Chris.io</h1>
                   <p className="text-lg h-8 mb-6">{text}<span className="animate-pulse">|</span></p>
                   <div className="flex justify-center gap-6 mt-4">
-                    <a href="https://discord.com/users/590893917587898369" target="_blank"><img src="/discord.png" className="w-8 h-8 opacity-70 hover:opacity-100" /></a>
-                    <a href="https://github.com/morkelchristan-cpu" target="_blank"><img src="/github.png" className="w-8 h-8 opacity-70 hover:opacity-100" /></a>
+                    <a href="https://discord.com/users/590893917587898369" target="_blank"><img src="/discord.png" className="w-8 h-8 opacity-70 hover:opacity-100 transition" /></a>
+                    <a href="https://github.com/morkelchristan-cpu" target="_blank"><img src="/github.png" className="w-8 h-8 opacity-70 hover:opacity-100 transition" /></a>
                   </div>
                 </motion.div>
               )}
               
               {activeSection === 'About' && (
-                <motion.div key="about" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-white/5 p-8 rounded-3xl max-w-lg text-center backdrop-blur-md border border-white/10">
+                <motion.div key="about" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="bg-white/5 p-8 rounded-3xl max-w-lg text-center backdrop-blur-md border border-white/10">
                   <h2 className="text-3xl font-bold mb-4">About</h2>
                   <p className="opacity-80">18-year-old developer from Africa. Architecting the future of community management and web experiences.</p>
                 </motion.div>
               )}
 
               {activeSection === 'Projects' && (
-                <motion.div key="projects" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center">
+                <motion.div key="projects" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="text-center">
                   <h2 className="text-4xl font-bold mb-8">Projects</h2>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-white/5 p-6 rounded-2xl border border-white/10">ZHPD Nexus</div>
-                    <div className="bg-white/5 p-6 rounded-2xl border border-white/10">Bot Ecosystems</div>
+                    <motion.div whileHover={{ y: -5 }} className="bg-white/5 p-6 rounded-2xl border border-white/10">ZHPD Nexus</motion.div>
+                    <motion.div whileHover={{ y: -5 }} className="bg-white/5 p-6 rounded-2xl border border-white/10">Bot Ecosystems</motion.div>
                   </div>
                 </motion.div>
               )}
 
               {activeSection === 'Socials' && (
-                <motion.div key="socials" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col gap-4">
-                  <a href="https://www.youtube.com/@cloudiit_V" className="bg-white/5 p-6 rounded-2xl border border-white/10 text-xl font-bold">YouTube</a>
-                  <a href="https://twitch.tv/cloudiit_v" className="bg-white/5 p-6 rounded-2xl border border-white/10 text-xl font-bold">Twitch</a>
+                <motion.div key="socials" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="flex flex-col gap-4">
+                  <motion.a whileHover={{ scale: 1.05 }} href="https://www.youtube.com/@cloudiit_V" className="bg-white/5 p-6 rounded-2xl border border-white/10 text-xl font-bold text-center">YouTube</motion.a>
+                  <motion.a whileHover={{ scale: 1.05 }} href="https://twitch.tv/cloudiit_v" className="bg-white/5 p-6 rounded-2xl border border-white/10 text-xl font-bold text-center">Twitch</motion.a>
                 </motion.div>
               )}
             </AnimatePresence>
