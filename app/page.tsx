@@ -208,7 +208,7 @@ return (
 
 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 text-center w-80 shadow-2xl">
 
-<img src="/pfp.jpg" alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10" />
+<img src="/your-profile.gif" alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10" />
 
 <h1 className="text-4xl font-bold mb-2">Chris.io</h1>
 
@@ -300,5 +300,4 @@ return (
 
 );
 
-} 
-
+}
