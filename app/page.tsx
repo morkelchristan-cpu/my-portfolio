@@ -17,7 +17,6 @@ const MUSIC_TRACKS = [
 
 export default function Home() {
   const [entered, setEntered] = useState(false);
-  const [activeSection, setActiveSection] = useState('Home');
   const [text, setText] = useState('');
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -25,11 +24,6 @@ export default function Home() {
   const [trackIndex, setTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    document.title = 'Chris.io';
-    setTrackIndex(Math.floor(Math.random() * MUSIC_TRACKS.length));
-  }, []);
 
   useEffect(() => {
     if (!entered) return;
@@ -44,85 +38,79 @@ export default function Home() {
         setCharIndex(charIndex + 1);
         if (charIndex + 1 === currentPhrase.length) setTimeout(() => setIsDeleting(true), 1500);
       }
-    }, isDeleting ? 50 : 100);
+    }, isDeleting ? 40 : 80);
     return () => clearTimeout(timer);
   }, [entered, phraseIndex, charIndex, isDeleting]);
 
-  const togglePlay = () => {
-    if (isPlaying) audioRef.current?.pause();
-    else audioRef.current?.play();
-    setIsPlaying(!isPlaying);
-  };
-
   return (
-    <main className="h-screen w-full overflow-hidden text-white cursor-custom">
-      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10" src="/Background1.mp4" />
-      <audio ref={audioRef} src={MUSIC_TRACKS[trackIndex].path} />
+    <main className="min-h-screen bg-black text-white selection:bg-blue-500/30 overflow-x-hidden">
+      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10 brightness-[0.25]" src="/Background1.mp4" />
 
       {!entered ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xl cursor-pointer" onClick={() => { setEntered(true); setIsPlaying(true); audioRef.current?.play(); }}>
-          <motion.h1 
-            animate={{ opacity: [0.5, 1, 0.5] }} 
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="text-3xl tracking-[0.5em] font-light uppercase text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
-          >
-            Click to Enter
-          </motion.h1>
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/60 backdrop-blur-2xl cursor-pointer" onClick={() => { setEntered(true); audioRef.current?.play(); }}>
+          <h1 className="text-2xl font-light tracking-[0.4em] uppercase opacity-70 hover:opacity-100 transition">Enter</h1>
         </div>
       ) : (
-        <>
-          <div className="fixed left-6 top-1/2 -translate-y-1/2 z-40 bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl w-48 text-center shadow-2xl">
-            <p className="text-xs uppercase tracking-widest opacity-60 mb-2">Now Playing</p>
-            <p className="font-bold text-sm mb-3">{MUSIC_TRACKS[trackIndex].name}</p>
-            <button onClick={togglePlay} className="hover:text-blue-300 transition">{isPlaying ? "Pause" : "Play"}</button>
-          </div>
-
-          <div className="fixed top-6 right-6 z-40 flex gap-4">
-            {['Home', 'About', 'Projects', 'Socials'].map(s => (
-              <button key={s} onClick={() => setActiveSection(s)} className="text-sm uppercase tracking-widest opacity-60 hover:opacity-100 transition">{s}</button>
-            ))}
-          </div>
-
-          <div className="h-full flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              {activeSection === 'Home' && (
-                <motion.div key="home" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] p-10 text-center w-80 shadow-2xl">
-                  <img src="/your-profile.gif" alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10 object-cover" />
-                  <h1 className="text-4xl font-bold mb-2">Chris.io</h1>
-                  <p className="text-lg h-8 mb-6">{text}<span className="animate-pulse">|</span></p>
-                  <div className="flex justify-center gap-6 mt-4">
-                    <a href="https://discord.com/users/590893917587898369" target="_blank"><img src="/discord.png" className="w-8 h-8 opacity-70 hover:opacity-100 transition" /></a>
-                    <a href="https://github.com/morkelchristan-cpu" target="_blank"><img src="/github.png" className="w-8 h-8 opacity-70 hover:opacity-100 transition" /></a>
-                  </div>
-                </motion.div>
-              )}
+        <div className="max-w-5xl mx-auto px-6 py-20">
+          
+          {/* Main Profile Block */}
+          <section id="home" className="flex justify-center mb-32">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] p-8 rounded-[2rem] text-center w-72 shadow-2xl">
+              <img src="/your-profile.gif" alt="Profile" className="w-20 h-20 rounded-full mx-auto mb-5 border border-white/10" />
+              <h1 className="text-2xl font-bold mb-3 tracking-tight">Chris.io</h1>
               
-              {activeSection === 'About' && (
-                <motion.div key="about" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="bg-white/5 p-8 rounded-3xl max-w-lg text-center backdrop-blur-md border border-white/10">
-                  <h2 className="text-3xl font-bold mb-4">About</h2>
-                  <p className="opacity-80">18-year-old developer from Africa. Architecting the future of community management and web experiences.</p>
-                </motion.div>
-              )}
-
-              {activeSection === 'Projects' && (
-                <motion.div key="projects" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="text-center">
-                  <h2 className="text-4xl font-bold mb-8">Projects</h2>
-                  <div className="grid grid-cols-2 gap-4">
-                    <motion.div whileHover={{ y: -5 }} className="bg-white/5 p-6 rounded-2xl border border-white/10">ZHPD Nexus</motion.div>
-                    <motion.div whileHover={{ y: -5 }} className="bg-white/5 p-6 rounded-2xl border border-white/10">Bot Ecosystems</motion.div>
+              <div className="flex justify-center gap-2 mb-5">
+                {techStack.map((t) => (
+                  <div key={t.name} className="group relative bg-white/5 p-2 rounded-lg border border-white/5">
+                    <img src={t.icon} alt={t.name} className="w-4 h-4 opacity-60 group-hover:opacity-100 transition" />
                   </div>
-                </motion.div>
-              )}
+                ))}
+              </div>
+              
+              <p className="text-sm font-mono opacity-60 h-6 mb-6">{text}<span className="animate-pulse">|</span></p>
+              
+              <div className="flex justify-center gap-4 pt-4 border-t border-white/5">
+                <a href="https://discord.com/users/590893917587898369" target="_blank"><img src="/discord.png" className="w-6 h-6 opacity-50 hover:opacity-100 transition" /></a>
+                <a href="https://github.com/morkelchristan-cpu" target="_blank"><img src="/github.png" className="w-6 h-6 opacity-50 hover:opacity-100 transition" /></a>
+              </div>
+            </motion.div>
+          </section>
 
-              {activeSection === 'Socials' && (
-                <motion.div key="socials" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="flex flex-col gap-4">
-                  <motion.a whileHover={{ scale: 1.05 }} href="https://www.youtube.com/@cloudiit_V" className="bg-white/5 p-6 rounded-2xl border border-white/10 text-xl font-bold text-center">YouTube</motion.a>
-                  <motion.a whileHover={{ scale: 1.05 }} href="https://twitch.tv/cloudiit_v" className="bg-white/5 p-6 rounded-2xl border border-white/10 text-xl font-bold text-center">Twitch</motion.a>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </>
+          {/* About Section */}
+          <section id="about" className="mb-32">
+            <h3 className="text-xs uppercase tracking-[0.3em] text-blue-400 mb-10">Architecting Ecosystems</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              {[
+                { title: "Mission", desc: "Automating administrative logic for high-traffic LEO communities." },
+                { title: "Stack", desc: "Expertise in Next.js, Supabase, and advanced Node.js architecture." }
+              ].map((item, i) => (
+                <div key={i} className="bg-white/[0.02] p-8 rounded-2xl border border-white/[0.05]">
+                  <h4 className="text-lg font-semibold mb-2">{item.title}</h4>
+                  <p className="text-sm opacity-50 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Projects & Socials */}
+          <section id="footer" className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white/[0.02] p-8 rounded-2xl border border-white/[0.05]">
+              <h4 className="text-sm uppercase tracking-widest opacity-40 mb-6">Current Projects</h4>
+              <ul className="space-y-4 text-sm opacity-70">
+                <li>• ZHPD Nexus Portal</li>
+                <li>• Bot Ecosystem Development</li>
+                <li>• 3D Asset Rigging</li>
+              </ul>
+            </div>
+            <div className="bg-white/[0.02] p-8 rounded-2xl border border-white/[0.05]">
+              <h4 className="text-sm uppercase tracking-widest opacity-40 mb-6">Socials</h4>
+              <div className="flex gap-4">
+                <a href="https://www.youtube.com/@cloudiit_V" className="text-sm hover:text-red-400 transition">YouTube</a>
+                <a href="https://twitch.tv/cloudiit_v" className="text-sm hover:text-purple-400 transition">Twitch</a>
+              </div>
+            </div>
+          </section>
+        </div>
       )}
     </main>
   );
