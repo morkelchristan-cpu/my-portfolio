@@ -102,7 +102,9 @@ export default function Home() {
 
           <section id="home" className="h-screen flex items-center justify-center">
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="glass rounded-[2rem] p-10 text-center w-80 shadow-2xl">
-              <img src="/pfp.jpg" alt="Profile" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10" />
+              {/* Main Profile GIF - Placed above the name */}
+              <img src="/your-profile.gif" alt="Profile GIF" className="w-24 h-24 rounded-full mx-auto mb-4 border border-white/10 object-cover" />
+              
               <h1 className="text-4xl font-bold mb-2">Chris.io</h1>
               <div className="flex justify-center gap-3 bg-white/5 p-2 rounded-full mb-4 w-fit mx-auto border border-white/5">
                 {techStack.map((t) => (
@@ -113,10 +115,15 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-lg h-8 mb-6">{text}<span className="animate-pulse">|</span></p>
+              
+              {/* Social Links - Discord icon restored */}
               <div className="flex justify-center gap-6 mt-4">
-                {/* Updated to discord.gif */}
-                <a href="https://discord.com/users/590893917587898369" target="_blank" rel="noopener noreferrer"><img src="/discord.gif" alt="Discord" className="w-8 h-8 opacity-70 hover:opacity-100" /></a>
-                <a href="https://github.com/morkelchristan-cpu" target="_blank" rel="noopener noreferrer"><img src="/github.png" alt="GitHub" className="w-8 h-8 opacity-70 hover:opacity-100" /></a>
+                <a href="https://discord.com/users/590893917587898369" target="_blank" rel="noopener noreferrer">
+                    <img src="/discord.png" alt="Discord" className="w-8 h-8 opacity-70 hover:opacity-100" />
+                </a>
+                <a href="https://github.com/morkelchristan-cpu" target="_blank" rel="noopener noreferrer">
+                    <img src="/github.png" alt="GitHub" className="w-8 h-8 opacity-70 hover:opacity-100" />
+                </a>
               </div>
             </motion.div>
           </section>
