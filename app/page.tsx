@@ -56,7 +56,7 @@ export default function Home() {
             <h1 className="text-7xl font-bold tracking-tighter">Chris.io</h1>
             {/* Badges */}
             <div className="flex gap-3 mt-4">
-              {['Discord Dev', 'Fullstack', '3D Artist'].map(badge => (
+              {['Java.script', 'VsCode.editor', 'Next.js'].map(badge => (
                 <span key={badge} className="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] tracking-widest uppercase text-blue-300">{badge}</span>
               ))}
             </div>
@@ -67,7 +67,13 @@ export default function Home() {
           <section id="about" className="min-h-screen py-32 max-w-4xl mx-auto px-10">
             <h2 className="text-5xl font-bold mb-12">The Architect.</h2>
             <div className="space-y-8 text-lg opacity-80 leading-relaxed">
-              <p>At 18, I am building the digital infrastructure I once dreamed of using. My work is defined by performance, clean architecture, and a love-first approach to UI.</p>
+              <p>At 18, I am building the digital infrastructure I once dreamed of using. Based in Africa, my work is defined by performance, clean architecture, and a user-first approach to UI.
+
+I have a passion for creating modern web applications, powerful backend systems, and custom Discord bots that help communities automate tasks and enhance the user experience. Every project is built with scalability, reliability, and maintainability in mind, ensuring it performs as well as it looks.
+
+I believe great software is more than just code—it's about solving real problems through thoughtful design and clean engineering. By combining modern technologies with attention to detail, I strive to create digital experiences that are fast, intuitive, and built to last.
+
+I'm constantly learning, experimenting with new technologies, and pushing myself to build better products with every project.</p>
             </div>
           </section>
 
@@ -96,7 +102,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {[
                 { label: 'Twitch', desc: 'Live Coding' },
-                { label: 'YouTube', desc: 'Dev Logs' },
+                { label: 'YouTube', desc: 'Dev Vids' },
                 { label: 'GitHub', desc: 'Open Source' }
               ].map(s => (
                 <a key={s.label} href="#" className="p-10 bg-white/5 border border-white/5 rounded-3xl hover:border-blue-500/50 transition group">
