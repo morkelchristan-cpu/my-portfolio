@@ -17,6 +17,7 @@ const MUSIC_TRACKS = [
 
 export default function Home() {
   const [entered, setEntered] = useState(false);
+  const [activeSection, setActiveSection] = useState('Home');
   const [text, setText] = useState('');
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -25,7 +26,11 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Typewriter effect
+  useEffect(() => {
+    document.title = 'Chris.io';
+    setTrackIndex(Math.floor(Math.random() * MUSIC_TRACKS.length));
+  }, []);
+
   useEffect(() => {
     if (!entered) return;
     const timer = setTimeout(() => {
@@ -39,76 +44,68 @@ export default function Home() {
         setCharIndex(charIndex + 1);
         if (charIndex + 1 === currentPhrase.length) setTimeout(() => setIsDeleting(true), 1500);
       }
-    }, isDeleting ? 50 : 100);
+    }, isDeleting ? 40 : 80);
     return () => clearTimeout(timer);
   }, [entered, phraseIndex, charIndex, isDeleting]);
 
-  const togglePlay = () => {
-    if (isPlaying) audioRef.current?.pause(); else audioRef.current?.play();
-    setIsPlaying(!isPlaying);
-  };
-
   return (
-    <main className="h-screen w-full overflow-y-auto scroll-smooth text-white cursor-crosshair selection:bg-blue-500/30">
-      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10 brightness-[0.3]" src="/Background1.mp4" />
+    <main className="h-screen w-full overflow-y-auto scroll-smooth text-white selection:bg-blue-500/30">
+      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10 brightness-[0.25]" src="/Background1.mp4" />
       <audio ref={audioRef} src={MUSIC_TRACKS[trackIndex].path} />
 
       {!entered ? (
         <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/60 backdrop-blur-2xl cursor-pointer" onClick={() => { setEntered(true); audioRef.current?.play(); setIsPlaying(true); }}>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-5xl font-thin tracking-[0.2em] uppercase">Enter Portal</motion.h1>
-          <p className="mt-4 opacity-50 text-sm">click anywhere</p>
+          <motion.h1 animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 2, repeat: Infinity }} className="text-3xl tracking-[0.5em] font-light uppercase">Click to Enter</motion.h1>
         </div>
       ) : (
-        <div className="px-6 md:px-20">
-          {/* Floating HUD */}
-          <div className="fixed top-8 right-8 z-40 bg-white/5 backdrop-blur-xl border border-white/10 p-5 rounded-3xl w-64 shadow-2xl hover:border-white/20 transition-all">
-            <p className="text-[9px] uppercase tracking-[0.2em] opacity-40 mb-2">System Audio</p>
-            <p className="font-semibold text-sm truncate">{MUSIC_TRACKS[trackIndex].name}</p>
-            <button onClick={togglePlay} className="mt-4 text-xs bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition">{isPlaying ? "Pause Stream" : "Resume Stream"}</button>
-          </div>
-
-          <section id="home" className="h-screen flex items-center justify-center">
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="group relative bg-white/5 backdrop-blur-2xl border border-white/10 p-12 rounded-[3rem] text-center w-[350px] shadow-2xl hover:shadow-[0_0_50px_rgba(255,255,255,0.05)] transition-all">
-              <div className="absolute inset-0 rounded-[3rem] border border-white/5 group-hover:border-blue-500/30 transition-colors" />
-              <img src="/your-profile.gif" alt="Profile" className="w-32 h-32 rounded-full mx-auto mb-8 border-4 border-white/5 shadow-2xl" />
-              <h1 className="text-5xl font-bold mb-2 tracking-tight">Chris.io</h1>
-              <p className="text-blue-300/80 font-mono text-sm h-8 mt-4">{text}<span className="animate-pulse">_</span></p>
+        <div className="max-w-5xl mx-auto px-6 py-20">
+          
+          {/* Main Hero & Profile */}
+          <section id="home" className="min-h-screen flex flex-col items-center justify-center">
+            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] p-10 rounded-[3rem] text-center w-80 shadow-2xl">
+              <img src="/your-profile.gif" alt="Profile" className="w-28 h-28 rounded-full mx-auto mb-6 border-2 border-white/10 object-cover" />
+              <h1 className="text-4xl font-bold mb-2">Chris.io</h1>
+              <p className="text-blue-300 font-mono text-sm h-8">{text}<span className="animate-pulse">|</span></p>
+              
+              <div className="flex justify-center gap-3 mt-6">
+                {techStack.map((t) => (
+                  <div key={t.name} className="bg-white/5 p-3 rounded-xl border border-white/5"><img src={t.icon} className="w-5 h-5 opacity-70" /></div>
+                ))}
+              </div>
             </motion.div>
           </section>
 
-          <section id="about" className="py-20">
-            <h2 className="text-7xl font-bold mb-16 ml-4">Architect.</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { title: "Core Focus", text: "Automating LEO community ecosystems with high-performance bot logic.", color: "border-blue-500/30" },
-                { title: "Design Aesthetic", text: "Glassmorphism, deep blue tones, and minimalist cloud-themed UI.", color: "border-indigo-500/30" },
-                { title: "Tech Stack", text: "Next.js, Supabase, and advanced Node.js architecture.", color: "border-purple-500/30" }
-              ].map((item, i) => (
-                <motion.div key={i} whileHover={{ y: -10 }} className={`bg-white/5 p-8 rounded-3xl border ${item.color} backdrop-blur-xl`}>
-                  <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
-                  <p className="opacity-60 leading-relaxed">{item.text}</p>
-                </motion.div>
-              ))}
+          {/* Detailed Story Section */}
+          <section id="about" className="py-32">
+            <h2 className="text-sm uppercase tracking-[0.4em] text-blue-400 mb-12">My Story</h2>
+            <div className="grid md:grid-cols-2 gap-12">
+              <div>
+                <h3 className="text-4xl font-bold mb-6">Born to build, <br />raised by code.</h3>
+                <p className="opacity-60 leading-loose">At 18, I've transformed from a curious teenager in Africa to a digital architect. I don't just write scripts; I build ecosystems that manage thousands of users seamlessly.</p>
+              </div>
+              <div className="space-y-6">
+                <div className="bg-white/[0.02] p-6 rounded-2xl border border-white/5 hover:border-blue-500/30 transition">
+                  <h4 className="font-bold mb-2">The Vision</h4>
+                  <p className="text-sm opacity-50">Bridging the gap between manual administration and high-performance automation.</p>
+                </div>
+                <div className="bg-white/[0.02] p-6 rounded-2xl border border-white/5 hover:border-purple-500/30 transition">
+                  <h4 className="font-bold mb-2">The Approach</h4>
+                  <p className="text-sm opacity-50">Everything I build is glass-themed, data-driven, and designed for maximum scalability.</p>
+                </div>
+              </div>
             </div>
           </section>
 
-          <section id="projects" className="py-20">
-            <h2 className="text-7xl font-bold mb-16 ml-4 text-right">Projects.</h2>
-            <div className="space-y-6">
-              {['ZHPD Nexus Portal', 'Automated Bot Ecosystems', '3D Asset Manipulation'].map((p, i) => (
-                <motion.div key={i} whileHover={{ scale: 1.01 }} className="bg-white/5 border border-white/5 p-10 rounded-[2rem] flex justify-between items-center backdrop-blur-lg group">
-                  <span className="text-3xl font-light">{p}</span>
-                  <span className="opacity-30 group-hover:opacity-100 transition-opacity">VIEW PROJECT →</span>
-                </motion.div>
+          {/* Project Showcase */}
+          <section id="projects" className="py-32">
+            <h2 className="text-sm uppercase tracking-[0.4em] text-blue-400 mb-12">Featured Works</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {['ZHPD Nexus', 'Bot Infrastructure', '3D Environments'].map((p, i) => (
+                <div key={i} className="h-64 bg-white/[0.02] border border-white/5 rounded-3xl p-8 flex flex-col justify-end group hover:bg-white/[0.05] transition">
+                  <span className="text-xl font-bold">{p}</span>
+                  <span className="text-xs opacity-40 uppercase tracking-widest mt-2">Active Project</span>
+                </div>
               ))}
-            </div>
-          </section>
-
-          <section id="socials" className="py-20 text-center mb-20">
-            <h2 className="text-8xl font-bold mb-20 tracking-tighter">Stay Connected</h2>
-            <div className="grid grid-cols-2 gap-8 max-w-2xl mx-auto">
-              <a href="https://www.youtube.com/@cloudiit_V" className="bg-white/5 hover:bg-red-500/20 transition-all p-12 rounded-[2rem] border border-white/5">YouTube</a>
-              <a href="https://twitch.tv/cloudiit_v" className="bg-white/5 hover:bg-purple-500/20 transition-all p-12 rounded-[2rem] border border-white/5">Twitch</a>
             </div>
           </section>
         </div>
