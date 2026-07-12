@@ -32,7 +32,8 @@ const PROJECT_DETAILS = [
   { name: "Bridger.io", status: "Active", desc: "Manages seamless message/log bridging between multiple Discord servers." },
   { name: "Sentinel", status: "Active", desc: "Officer-focused BOLO system for real-time tracking and dispatch intelligence." },
   { name: "LSPD Punishments", status: "Active", desc: "Automated community moderation and punishment tracking system." },
-  { name: "3D Environments", status: "Idle", desc: "Creative 3D modeling and environment rigging experiments." }
+  { name: "3D Environments", status: "Idle", desc: "Creative 3D modeling and environment rigging experiments." },
+  { name: "Legacy Archives", status: "Inactive", desc: "Deprecated systems and archival data logs." }
 ];
 
 export default function Home() {
@@ -76,6 +77,14 @@ export default function Home() {
           <section id="home" className="h-screen flex flex-col items-center justify-center text-center">
             <motion.img initial={{ scale: 0 }} animate={{ scale: 1 }} src="/your-profile.gif" className="w-40 h-40 rounded-full mb-8 border border-white/10 shadow-[0_0_50px_rgba(59,130,246,0.3)]" alt="Profile" />
             <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-8xl font-bold tracking-tighter">Chris.io</motion.h1>
+            
+            {/* Added Badges */}
+            <div className="flex gap-4 mt-6">
+              {['Java.script', 'Next.js', 'Discord.js', 'Blender'].map(badge => (
+                <span key={badge} className="px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] tracking-widest uppercase text-blue-300">{badge}</span>
+              ))}
+            </div>
+            
             <p className="mt-6 text-blue-300/50 font-mono tracking-widest text-sm uppercase">Digital Architect</p>
           </section>
 
@@ -103,6 +112,12 @@ export default function Home() {
                 <motion.div key={p.name} whileHover={{ scale: 1.02 }} className="p-10 bg-white/[0.03] backdrop-blur-lg border border-white/5 rounded-[2rem] hover:border-blue-500/20 transition">
                   <div className="flex justify-between items-center mb-6">
                     <h3 className="text-2xl font-bold">{p.name}</h3>
+                    {/* Status Indicators */}
+                    <div className="flex items-center gap-2 text-[10px] uppercase bg-white/5 px-4 py-2 rounded-full">
+                      {p.status === 'Active' && <><div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> Active</>}
+                      {p.status === 'Idle' && <>🌙 Idle</>}
+                      {p.status === 'Inactive' && <><div className="w-2 h-2 rounded-full bg-red-500" /> Inactive</>}
+                    </div>
                   </div>
                   <p className="opacity-60 text-md leading-relaxed">{p.desc}</p>
                 </motion.div>
