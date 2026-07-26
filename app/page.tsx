@@ -45,7 +45,7 @@ export default function Home() {
   
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const songs = ['/ibiza.mp3', '/song2.mp3'];
+  const songs = ['/ibiza.mp3', '/dakati.mp3'];
 
   const handleNext = () => {
     setCurrentSongIndex((prev) => (prev + 1) % songs.length);
