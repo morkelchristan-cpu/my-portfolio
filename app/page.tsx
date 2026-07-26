@@ -27,7 +27,7 @@ const CustomCursor = () => {
 };
 
 // --- Live Synced Spotify-Style Lyrics Component ---
-const LiveLyrics = ({ audioRef }: { audioRef: React.RefObject<HTMLAudioElement | null> }) => {
+const LiveLyrics = ({ audioRef, currentSongIndex }: { audioRef: React.RefObject<HTMLAudioElement | null>, currentSongIndex: number }) => {
   const trackLyrics: { [key: number]: { time: number; text: string }[] } = {
     0: [
       { time: 0, text: "Connecting to the session..." },
@@ -45,7 +45,6 @@ const LiveLyrics = ({ audioRef }: { audioRef: React.RefObject<HTMLAudioElement |
   };
 
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
-  const activeTrack = 0; // Syncs with the current active track index logic if needed
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -53,7 +52,7 @@ const LiveLyrics = ({ audioRef }: { audioRef: React.RefObject<HTMLAudioElement |
 
     const handleTimeUpdate = () => {
       const currentTime = audio.currentTime;
-      const lyrics = trackLyrics[activeTrack] || trackLyrics[0];
+      const lyrics = trackLyrics[currentSongIndex] || trackLyrics[0];
       
       const currentIndex = lyrics.findIndex((item, index) => {
         const nextItem = lyrics[index + 1];
@@ -67,16 +66,21 @@ const LiveLyrics = ({ audioRef }: { audioRef: React.RefObject<HTMLAudioElement |
 
     audio.addEventListener('timeupdate', handleTimeUpdate);
     return () => audio.removeEventListener('timeupdate', handleTimeUpdate);
-  }, [audioRef, activeTrack, currentLineIndex]);
+  }, [audioRef, currentSongIndex, currentLineIndex]);
 
-  const currentLyrics = trackLyrics[activeTrack] || trackLyrics[0];
+  // Reset lyric index when song changes
+  useEffect(() => {
+    setCurrentLineIndex(0);
+  }, [currentSongIndex]);
+
+  const currentLyrics = trackLyrics[currentSongIndex] || trackLyrics[0];
   const activeText = currentLyrics[currentLineIndex]?.text || "Playing...";
 
   return (
     <div className="h-10 overflow-hidden relative mt-6 flex justify-center items-center w-full max-w-md mx-auto">
       <AnimatePresence mode="wait">
         <motion.p
-          key={`${currentLineIndex}`}
+          key={`${currentSongIndex}-${currentLineIndex}`}
           initial={{ y: 15, opacity: 0, filter: "blur(4px)" }}
           animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
           exit={{ y: -15, opacity: 0, filter: "blur(4px)" }}
@@ -238,7 +242,7 @@ export default function Home() {
               ))}
             </div>
             
-            <LiveLyrics audioRef={audioRef} />
+            <LiveLyrics audioRef={audioRef} currentSongIndex={currentSongIndex} />
           </section>
 
           <section id="about" className="min-h-screen py-32 max-w-4xl mx-auto px-10">
