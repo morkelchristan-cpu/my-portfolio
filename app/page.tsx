@@ -26,6 +26,34 @@ const CustomCursor = () => {
   );
 };
 
+// --- Animated Subtitle Component ---
+const AnimatedSubtitle = () => {
+  const words = ["Digital Architect", "Full-Stack Developer", "UI/UX Creator", "Automation Specialist"];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % words.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [words.length]);
+
+  return (
+    <div className="h-8 overflow-hidden relative mt-6 flex justify-center items-center">
+      <motion.p
+        key={currentIndex}
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -20, opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        className="text-gray-300/70 font-mono tracking-widest text-sm uppercase absolute"
+      >
+        {words[currentIndex]}
+      </motion.p>
+    </div>
+  );
+};
+
 // --- Data ---
 const PROJECT_DETAILS = [
   { name: "ZHPD Bot", status: "Active", desc: "Automatic callsign requester, formal complaints, and anonymous reporting system." },
@@ -44,8 +72,7 @@ export default function Home() {
   const [isLooping, setIsLooping] = useState(true);
   
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  const songs = ['/ibiza.mp3', '/dakati.mp3'];
+  const songs = ['/ibiza.mp3', '/song2.mp3'];
 
   const handleNext = () => {
     setCurrentSongIndex((prev) => (prev + 1) % songs.length);
@@ -142,7 +169,7 @@ export default function Home() {
               ))}
             </div>
             
-            <p className="mt-6 text-gray-300/50 font-mono tracking-widest text-sm uppercase">Digital Architect</p>
+            <AnimatedSubtitle />
           </section>
 
           <section id="about" className="min-h-screen py-32 max-w-4xl mx-auto px-10">
