@@ -29,18 +29,18 @@ const CustomCursor = () => {
 // --- Live Synced Spotify-Style Lyrics Component ---
 const LiveLyrics = ({ audioRef, currentSongIndex }: { audioRef: React.RefObject<HTMLAudioElement | null>, currentSongIndex: number }) => {
   const trackLyrics: { [key: number]: { time: number; text: string }[] } = {
-    0: [
-      { time: 0, text: "Connecting to the session..." },
-      { time: 4, text: "Late nights and ocean waves..." },
-      { time: 9, text: "Driving down the coast line..." },
-      { time: 15, text: "Lost in the rhythm of the beat..." },
-      { time: 22, text: "Everything is falling into place." }
+    0: [ // Ibiza - "Love Me Not" lyrics
+      { time: 0, text: "Love me, love me not..." },
+      { time: 4, text: "You said you cared, but forgot." },
+      { time: 9, text: "Running circles in my head" },
+      { time: 15, text: "Every single word you said." },
+      { time: 22, text: "Now I'm drifting on my own." }
     ],
-    1: [
-      { time: 0, text: "System online..." },
-      { time: 5, text: "Underground electronic flow..." },
-      { time: 11, text: "Pushing the limits of the code..." },
-      { time: 18, text: "Nothing can stop the signal now." }
+    1: [ // Dakati - "Groovy Freestyle" lyrics
+      { time: 0, text: "Yeah, keeping it groovy..." },
+      { time: 5, text: "Moving fast, feeling smooth." },
+      { time: 11, text: "Locked in the rhythm, watch me flow" },
+      { time: 18, text: "Taking over every single show." }
     ]
   };
 
@@ -105,8 +105,8 @@ const PROJECT_DETAILS = [
 ];
 
 const SONGS = [
-  { src: '/ibiza.mp3', title: 'Ibiza', subtitle: 'Late Night Chill & Waves' },
-  { src: '/song2.mp3', title: 'Track 02', subtitle: 'Underground Electronic Flow' }
+  { src: '/ibiza.mp3', title: 'Ibiza', subtitle: 'Love Me Not' },
+  { src: '/dakati.mp3', title: 'Groovy Freestyle', subtitle: 'Dakati' }
 ];
 
 export default function Home() {
@@ -121,7 +121,9 @@ export default function Home() {
   const handleNext = () => {
     setCurrentSongIndex((prev) => (prev + 1) % SONGS.length);
     setIsPlaying(true);
-    setTimeout(() => audioRef.current?.play(), 50);
+    setTimeout(() => {
+      audioRef.current?.play().catch(e => console.log("Playback error:", e));
+    }, 50);
   };
 
   const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,13 +145,25 @@ export default function Home() {
         ref={audioRef} 
         src={SONGS[currentSongIndex].src} 
         loop={isLooping}
+        preload="auto"
         onEnded={() => {
           if (!isLooping) handleNext();
         }}
       />
 
       {!entered ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-3xl cursor-pointer" onClick={() => { setEntered(true); audioRef.current?.play(); setIsPlaying(true); }}>
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-3xl cursor-pointer" 
+          onClick={() => { 
+            setEntered(true); 
+            if (audioRef.current) {
+              audioRef.current.volume = volume;
+              audioRef.current.play().then(() => {
+                setIsPlaying(true);
+              }).catch(err => console.log("Audio play blocked:", err));
+            }
+          }}
+        >
           <motion.h1 animate={{ opacity: [0.5, 1, 0.5] }} transition={{ repeat: Infinity, duration: 2 }} className="tracking-[0.8em] uppercase text-xs font-light">Click to Access Secure Terminal</motion.h1>
         </div>
       ) : (
@@ -201,10 +215,10 @@ export default function Home() {
                   if (audioRef.current) {
                     if (isPlaying) {
                       audioRef.current.pause();
+                      setIsPlaying(false);
                     } else {
-                      audioRef.current.play();
+                      audioRef.current.play().then(() => setIsPlaying(true)).catch(e => console.log(e));
                     }
-                    setIsPlaying(!isPlaying);
                   }
                 }} 
                 className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition text-xs"
