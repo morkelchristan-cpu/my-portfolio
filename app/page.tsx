@@ -26,30 +26,66 @@ const CustomCursor = () => {
   );
 };
 
-// --- Animated Subtitle Component (Hero Section) ---
-const AnimatedSubtitle = () => {
-  const words = ["Digital Architect", "Full-Stack Developer", "UI/UX Creator", "Automation Specialist"];
-  const [currentIndex, setCurrentIndex] = useState(0);
+// --- Live Synced Spotify-Style Lyrics Component ---
+const LiveLyrics = ({ audioRef }: { audioRef: React.RefObject<HTMLAudioElement | null> }) => {
+  const trackLyrics: { [key: number]: { time: number; text: string }[] } = {
+    0: [
+      { time: 0, text: "Connecting to the session..." },
+      { time: 4, text: "Late nights and ocean waves..." },
+      { time: 9, text: "Driving down the coast line..." },
+      { time: 15, text: "Lost in the rhythm of the beat..." },
+      { time: 22, text: "Everything is falling into place." }
+    ],
+    1: [
+      { time: 0, text: "System online..." },
+      { time: 5, text: "Underground electronic flow..." },
+      { time: 11, text: "Pushing the limits of the code..." },
+      { time: 18, text: "Nothing can stop the signal now." }
+    ]
+  };
+
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const activeTrack = 0; // Syncs with the current active track index logic if needed
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % words.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [words.length]);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleTimeUpdate = () => {
+      const currentTime = audio.currentTime;
+      const lyrics = trackLyrics[activeTrack] || trackLyrics[0];
+      
+      const currentIndex = lyrics.findIndex((item, index) => {
+        const nextItem = lyrics[index + 1];
+        return currentTime >= item.time && (!nextItem || currentTime < nextItem.time);
+      });
+
+      if (currentIndex !== -1 && currentIndex !== currentLineIndex) {
+        setCurrentLineIndex(currentIndex);
+      }
+    };
+
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    return () => audio.removeEventListener('timeupdate', handleTimeUpdate);
+  }, [audioRef, activeTrack, currentLineIndex]);
+
+  const currentLyrics = trackLyrics[activeTrack] || trackLyrics[0];
+  const activeText = currentLyrics[currentLineIndex]?.text || "Playing...";
 
   return (
-    <div className="h-8 overflow-hidden relative mt-6 flex justify-center items-center">
-      <motion.p
-        key={currentIndex}
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: -20, opacity: 0 }}
-        transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="text-gray-300/70 font-mono tracking-widest text-sm uppercase absolute"
-      >
-        {words[currentIndex]}
-      </motion.p>
+    <div className="h-10 overflow-hidden relative mt-6 flex justify-center items-center w-full max-w-md mx-auto">
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={`${currentLineIndex}`}
+          initial={{ y: 15, opacity: 0, filter: "blur(4px)" }}
+          animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+          exit={{ y: -15, opacity: 0, filter: "blur(4px)" }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="text-gray-300/80 font-mono tracking-wider text-xs uppercase absolute text-center px-4"
+        >
+          {activeText}
+        </motion.p>
+      </AnimatePresence>
     </div>
   );
 };
@@ -114,7 +150,7 @@ export default function Home() {
         </div>
       ) : (
         <>
-          {/* Music Player Widget with Animated Subtitles */}
+          {/* Music Player Widget */}
           <div className="fixed top-8 right-60 z-50 bg-black/40 backdrop-blur-xl px-5 py-3 rounded-2xl border border-white/10 flex items-center gap-6 shadow-2xl">
             <div className="flex flex-col overflow-hidden w-36">
               <span className="text-[9px] uppercase tracking-widest text-gray-500">Now Playing</span>
@@ -202,7 +238,7 @@ export default function Home() {
               ))}
             </div>
             
-            <AnimatedSubtitle />
+            <LiveLyrics audioRef={audioRef} />
           </section>
 
           <section id="about" className="min-h-screen py-32 max-w-4xl mx-auto px-10">
