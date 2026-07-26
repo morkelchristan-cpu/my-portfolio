@@ -39,13 +39,19 @@ const PROJECT_DETAILS = [
 export default function Home() {
   const [entered, setEntered] = useState(false);
   const [volume, setVolume] = useState(0.5);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isLooping, setIsLooping] = useState(true);
+  
+  const audioRef = useRef<HTMLAudioElement>(null);
 
-  // List of your songs (update filenames if needed)
-  const songs = ['/ibiza.mp3', '/dakati.mp3'];
+  const songs = ['/ibiza.mp3', '/song2.mp3'];
+
+  const handleNext = () => {
+    setCurrentSongIndex((prev) => (prev + 1) % songs.length);
+    setIsPlaying(true);
+    setTimeout(() => audioRef.current?.play(), 50);
+  };
 
   const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = parseFloat(e.target.value);
@@ -61,6 +67,7 @@ export default function Home() {
       
       <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover -z-10" src="/background_v2.mp4" />
       <div className="fixed inset-0 bg-black/70 -z-10" />
+      
       <audio 
         ref={audioRef} 
         src={songs[currentSongIndex]} 
@@ -70,59 +77,50 @@ export default function Home() {
         }}
       />
 
-      {/* Music Player Widget */}
-      <div className="fixed top-8 right-60 z-50 bg-black/40 backdrop-blur-xl px-5 py-3 rounded-2xl border border-white/10 flex items-center gap-4 shadow-2xl">
-        <div className="text-[10px] uppercase tracking-widest text-gray-300">
-          Track {currentSongIndex + 1}/{songs.length}
-        </div>
-        <div className="flex items-center gap-3">
-          {/* Repeat Button */}
-          <button 
-            onClick={() => setIsLooping(!isLooping)} 
-            className={`text-xs transition ${isLooping ? 'text-white' : 'text-gray-500'}`}
-            title="Toggle Repeat"
-          >
-            🔁
-          </button>
-
-          {/* Play / Pause Button */}
-          <button 
-            onClick={() => {
-              if (audioRef.current) {
-                if (isPlaying) {
-                  audioRef.current.pause();
-                } else {
-                  audioRef.current.play();
-                }
-                setIsPlaying(!isPlaying);
-              }
-            }} 
-            className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition text-xs"
-          >
-            {isPlaying ? '⏸' : '▶'}
-          </button>
-
-          {/* Skip Button */}
-          <button 
-            onClick={() => {
-              setCurrentSongIndex((prev) => (prev + 1) % songs.length);
-              setIsPlaying(true);
-              setTimeout(() => audioRef.current?.play(), 50);
-            }} 
-            className="text-xs hover:text-gray-300 transition"
-            title="Skip Track"
-          >
-            ⏭
-          </button>
-        </div>
-      </div>
-
       {!entered ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-3xl cursor-pointer" onClick={() => { setEntered(true); audioRef.current?.play(); }}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-3xl cursor-pointer" onClick={() => { setEntered(true); audioRef.current?.play(); setIsPlaying(true); }}>
           <motion.h1 animate={{ opacity: [0.5, 1, 0.5] }} transition={{ repeat: Infinity, duration: 2 }} className="tracking-[0.8em] uppercase text-xs font-light">Click to Access Secure Terminal</motion.h1>
         </div>
       ) : (
         <>
+          {/* Music Player Widget */}
+          <div className="fixed top-8 right-60 z-50 bg-black/40 backdrop-blur-xl px-5 py-3 rounded-2xl border border-white/10 flex items-center gap-4 shadow-2xl">
+            <div className="text-[10px] uppercase tracking-widest text-gray-300">
+              Track {currentSongIndex + 1}/{songs.length}
+            </div>
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setIsLooping(!isLooping)} 
+                className={`text-xs transition ${isLooping ? 'text-white' : 'text-gray-500'}`}
+                title="Toggle Repeat"
+              >
+                🔁
+              </button>
+              <button 
+                onClick={() => {
+                  if (audioRef.current) {
+                    if (isPlaying) {
+                      audioRef.current.pause();
+                    } else {
+                      audioRef.current.play();
+                    }
+                    setIsPlaying(!isPlaying);
+                  }
+                }} 
+                className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition text-xs"
+              >
+                {isPlaying ? '⏸' : '▶'}
+              </button>
+              <button 
+                onClick={handleNext} 
+                className="text-xs hover:text-gray-300 transition"
+                title="Skip Track"
+              >
+                ⏭
+              </button>
+            </div>
+          </div>
+
           <div className="fixed top-8 right-8 z-50 bg-white/5 backdrop-blur-xl p-4 rounded-2xl border border-white/10 w-48 shadow-2xl">
             <span className="text-[9px] opacity-40 uppercase tracking-widest mb-2 block">Audio Volume</span>
             <input type="range" min="0" max="1" step="0.1" value={volume} onChange={handleVolume} className="w-full h-1 accent-gray-500 cursor-pointer" />
