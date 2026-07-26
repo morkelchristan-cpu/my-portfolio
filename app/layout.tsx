@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css"; // Ensure this imports your Tailwind styles
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,8 @@ export default function RootLayout({
         {children}
         {/* Vercel Analytics component to track visitors */}
         <Analytics />
+        {/* Vercel Speed Insights component to track performance */}
+        <SpeedInsights />
       </body>
     </html>
   );

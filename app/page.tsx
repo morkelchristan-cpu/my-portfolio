@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // --- Components ---
 const CustomCursor = () => {
@@ -26,7 +26,7 @@ const CustomCursor = () => {
   );
 };
 
-// --- Animated Subtitle Component ---
+// --- Animated Subtitle Component (Hero Section) ---
 const AnimatedSubtitle = () => {
   const words = ["Digital Architect", "Full-Stack Developer", "UI/UX Creator", "Automation Specialist"];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -64,6 +64,11 @@ const PROJECT_DETAILS = [
   { name: "Legacy Archives", status: "Inactive", desc: "Deprecated systems and archival data logs." }
 ];
 
+const SONGS = [
+  { src: '/ibiza.mp3', title: 'Ibiza', subtitle: 'Late Night Chill & Waves' },
+  { src: '/song2.mp3', title: 'Track 02', subtitle: 'Underground Electronic Flow' }
+];
+
 export default function Home() {
   const [entered, setEntered] = useState(false);
   const [volume, setVolume] = useState(0.5);
@@ -72,10 +77,9 @@ export default function Home() {
   const [isLooping, setIsLooping] = useState(true);
   
   const audioRef = useRef<HTMLAudioElement>(null);
-  const songs = ['/ibiza.mp3', '/song2.mp3'];
 
   const handleNext = () => {
-    setCurrentSongIndex((prev) => (prev + 1) % songs.length);
+    setCurrentSongIndex((prev) => (prev + 1) % SONGS.length);
     setIsPlaying(true);
     setTimeout(() => audioRef.current?.play(), 50);
   };
@@ -97,7 +101,7 @@ export default function Home() {
       
       <audio 
         ref={audioRef} 
-        src={songs[currentSongIndex]} 
+        src={SONGS[currentSongIndex].src} 
         loop={isLooping}
         onEnded={() => {
           if (!isLooping) handleNext();
@@ -110,12 +114,41 @@ export default function Home() {
         </div>
       ) : (
         <>
-          {/* Music Player Widget */}
-          <div className="fixed top-8 right-60 z-50 bg-black/40 backdrop-blur-xl px-5 py-3 rounded-2xl border border-white/10 flex items-center gap-4 shadow-2xl">
-            <div className="text-[10px] uppercase tracking-widest text-gray-300">
-              Track {currentSongIndex + 1}/{songs.length}
+          {/* Music Player Widget with Animated Subtitles */}
+          <div className="fixed top-8 right-60 z-50 bg-black/40 backdrop-blur-xl px-5 py-3 rounded-2xl border border-white/10 flex items-center gap-6 shadow-2xl">
+            <div className="flex flex-col overflow-hidden w-36">
+              <span className="text-[9px] uppercase tracking-widest text-gray-500">Now Playing</span>
+              <div className="h-5 relative overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentSongIndex}
+                    initial={{ y: 15, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -15, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0"
+                  >
+                    <p className="text-xs font-semibold text-white truncate">{SONGS[currentSongIndex].title}</p>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              <div className="h-4 relative overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentSongIndex + '-sub'}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0"
+                  >
+                    <p className="text-[10px] text-gray-400 truncate tracking-tight">{SONGS[currentSongIndex].subtitle}</p>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
+
+            <div className="flex items-center gap-3 border-l border-white/10 pl-4">
               <button 
                 onClick={() => setIsLooping(!isLooping)} 
                 className={`text-xs transition ${isLooping ? 'text-white' : 'text-gray-500'}`}
