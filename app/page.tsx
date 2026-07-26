@@ -29,14 +29,14 @@ const CustomCursor = () => {
 // --- Live Synced Spotify-Style Lyrics Component ---
 const LiveLyrics = ({ audioRef, currentSongIndex }: { audioRef: React.RefObject<HTMLAudioElement | null>, currentSongIndex: number }) => {
   const trackLyrics: { [key: number]: { time: number; text: string }[] } = {
-    0: [ // Ibiza - "Love Me Not" lyrics
+    0: [ // Ibiza -> "Love Me Not" by Ravyn Lenae
       { time: 0, text: "Love me, love me not..." },
       { time: 4, text: "You said you cared, but forgot." },
       { time: 9, text: "Running circles in my head" },
       { time: 15, text: "Every single word you said." },
       { time: 22, text: "Now I'm drifting on my own." }
     ],
-    1: [ // Dakati - "Groovy Freestyle" lyrics
+    1: [ // Dakati -> "Groovy Freestyle" by Brenno, Childlike
       { time: 0, text: "Yeah, keeping it groovy..." },
       { time: 5, text: "Moving fast, feeling smooth." },
       { time: 11, text: "Locked in the rhythm, watch me flow" },
@@ -105,8 +105,8 @@ const PROJECT_DETAILS = [
 ];
 
 const SONGS = [
-  { src: '/ibiza.mp3', title: 'Ibiza', subtitle: 'Love Me Not' },
-  { src: '/dakati.mp3', title: 'Groovy Freestyle', subtitle: 'Dakati' }
+  { src: '/ibiza.mp3', title: 'Love Me Not', subtitle: 'Ravyn Lenae' },
+  { src: '/dakati.mp3', title: 'Groovy Freestyle', subtitle: 'Brenno, Childlike' }
 ];
 
 export default function Home() {
